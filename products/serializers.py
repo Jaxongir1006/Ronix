@@ -11,7 +11,8 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
-
+        depth = 2
+    
     def get_name(self, obj):
         lang = translation.get_language()
         return getattr(obj, f"name_{lang}", obj.name)
@@ -39,4 +40,11 @@ class CategorySerializer(serializers.ModelSerializer):
     def get_description(self, obj):
         lang = translation.get_language()
         return getattr(obj, f"description_{lang}", obj.description)
+
+
+class ProductByCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'features', 'category']
+        depth = 2
     

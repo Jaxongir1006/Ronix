@@ -10,7 +10,7 @@ class LanguageMiddleware:
             translation.activate(lang)
             request.LANGUAGE_CODE = lang
         else:
-            translation.activate('uz')
+            translation.activate('en')
         response = self.get_response(request)
         translation.deactivate()
         return response

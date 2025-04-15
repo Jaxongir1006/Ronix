@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+AUTH_USER_MODEL = 'users.User'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +46,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'modeltranslation',
     'modeltranslation.translator',
-    'jazzmin',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'Ronix.middleware.LanguageMiddleware'
+    'core.middleware.LanguageMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'Ronix.urls'
@@ -78,6 +80,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Ronix.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -112,22 +120,27 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+TRANSLATABLE_MODEL_MODULES = ["products.models",]
+
 LANGUAGES = (
     ('en', 'English'),
     ('uz', 'Uzbek'),
     ('ru', 'Russian'),
 )
 
-LANGUAGE_CODE = 'uz'
 USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+IS_MONOLINGUAL=False
+
+LANGUAGE_CODE = 'en'
 
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
 TIME_ZONE = 'Asia/Tashkent'
-
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,0 +1,199 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-15 08:35+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\blog\models.py:5 .\products\models.py:21 .\products\models.py:33
+msgid "Image"
+msgstr "Rasm"
+
+#: .\blog\models.py:6
+msgid "Title"
+msgstr "Sarlavha"
+
+#: .\blog\models.py:7
+#, fuzzy
+#| msgid "Description"
+msgid "Description "
+msgstr "Tavsif"
+
+#: .\blog\models.py:8
+msgid "View"
+msgstr "Korinish"
+
+#: .\blog\models.py:9 .\blog\models.py:19
+msgid "Created time"
+msgstr "Yaratilgan vaqt"
+
+#: .\blog\models.py:10
+msgid "Updated time"
+msgstr "Yangilangan vaqt"
+
+#: .\blog\models.py:13 .\blog\models.py:20
+msgid "Blog"
+msgstr "Blog"
+
+#: .\blog\models.py:14
+msgid "Blogs"
+msgstr "Bloglar"
+
+#: .\blog\models.py:17
+msgid "Text"
+msgstr "Text"
+
+#: .\blog\models.py:18 .\products\models.py:22 .\products\models.py:34
+msgid "Name"
+msgstr "Ism"
+
+#: .\blog\models.py:23
+msgid "Comment"
+msgstr "Izoh"
+
+#: .\blog\models.py:24
+msgid "Comments"
+msgstr "Izohlar"
+
+#: .\contact\models.py:5 .\distributors\models.py:5 .\pages\models.py:13
+msgid "Full name"
+msgstr "To'liq ism"
+
+#: .\contact\models.py:6 .\distributors\models.py:6
+msgid "Phone number"
+msgstr "Telefon raqami"
+
+#: .\contact\models.py:7 .\distributors\models.py:7
+msgid "Country"
+msgstr "Mamlakat"
+
+#: .\contact\models.py:8 .\distributors\models.py:8
+msgid "Email address"
+msgstr "E-pochta manzili"
+
+#: .\contact\models.py:9 .\distributors\models.py:9
+msgid "Company"
+msgstr "Kompaniya"
+
+#: .\contact\models.py:10
+msgid "Message"
+msgstr "Xabar"
+
+#: .\contact\models.py:11 .\distributors\models.py:11
+#, fuzzy
+#| msgid "Created time"
+msgid "Created at"
+msgstr "Yaratilgan vaqt"
+
+#: .\distributors\models.py:10
+#, fuzzy
+#| msgid "Specification"
+msgid "Occupation"
+msgstr "Spetsifikatsiya"
+
+#: .\distributors\models.py:12
+msgid "Is active ?"
+msgstr "Faolmi ?"
+
+#: .\pages\models.py:6
+#, fuzzy
+#| msgid "Description"
+msgid "Question"
+msgstr "Tavsif"
+
+#: .\pages\models.py:7
+msgid "Answer"
+msgstr "Javob"
+
+#: .\pages\models.py:14
+msgid "Email"
+msgstr "Elektron pochta"
+
+#: .\pages\models.py:15
+msgid "Subscribed at"
+msgstr "Obuna boʻlgan"
+
+#: .\products\models.py:6
+msgid "Type"
+msgstr "Turi"
+
+#: .\products\models.py:7
+msgid "Size"
+msgstr "Hajmi"
+
+#: .\products\models.py:8
+msgid "Power"
+msgstr "Quvvat"
+
+#: .\products\models.py:9
+msgid "Voltage"
+msgstr "Kuchlanishi"
+
+#: .\products\models.py:10
+msgid "Frequency"
+msgstr "Chastotasi"
+
+#: .\products\models.py:11
+msgid "Speed"
+msgstr "Tezlik"
+
+#: .\products\models.py:12
+msgid "Capacity in wood"
+msgstr "Yog'ochdagi sig'im"
+
+#: .\products\models.py:13
+msgid "Capacity in steel"
+msgstr "Po'latdagi quvvat"
+
+#: .\products\models.py:14
+msgid "Weight"
+msgstr "Og'irligi"
+
+#: .\products\models.py:15
+msgid "Supplied in"
+msgstr "Taqdim etilgan"
+
+#: .\products\models.py:23 .\products\models.py:37
+msgid "Description"
+msgstr "Tavsif"
+
+#: .\products\models.py:26 .\products\models.py:39
+msgid "Category"
+msgstr "Turkum"
+
+#: .\products\models.py:27
+msgid "Categories"
+msgstr "Kategoriyalar"
+
+#: .\products\models.py:35
+msgid "Model"
+msgstr "Model"
+
+#: .\products\models.py:36
+msgid "Features"
+msgstr "Xususiyatlari"
+
+#: .\products\models.py:38
+msgid "Specification"
+msgstr "Spetsifikatsiya"
+
+#: .\products\models.py:42
+msgid "Product"
+msgstr "Mahsulot"
+
+#: .\products\models.py:43
+msgid "Products"
+msgstr "Mahsulotlar"
