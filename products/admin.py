@@ -1,18 +1,20 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin
-from .models import Product, Category, Specification
+from .models import Product, Category, Specification,SubCategory,ProductImages
+from parler.admin import TranslatableAdmin
 
+@admin.register(Category)
+class CategoryAdmin(TranslatableAdmin):
+    list_display = ('__str__',)
 
-# @admin.register(Category)
-# class CategoryAdmin(TranslationAdmin):
-#     list_display = ('name', 'description')
-
-# @admin.register(Product)
-# class ProductAdmin(TranslationAdmin):
-#     list_display = ('name', 'description', 'features', 'category')
-
+@admin.register(SubCategory)
+class SubCategoryAdmin(TranslatableAdmin):
+    list_display = ('__str__',)
 
 admin.site.register(Specification)
-admin.site.register(Category)
-admin.site.register(Product)
+
+@admin.register(Product)
+class ProductAdmin(TranslatableAdmin):
+    list_display = ('__str__',)
+
+admin.site.register(ProductImages)
 

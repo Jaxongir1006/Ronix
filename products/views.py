@@ -19,4 +19,4 @@ class ProductByCategory(ModelViewSet):
     http_method_names = ['get']
 
     def get_queryset(self):
-        return Product.objects.filter(category = self.request.category, )
+        return Product.objects.filter(category = self.request.category)

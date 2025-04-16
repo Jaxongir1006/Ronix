@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-15 08:35+0500\n"
+"POT-Creation-Date: 2025-04-16 19:33+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,53 +18,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\blog\models.py:5 .\products\models.py:21 .\products\models.py:33
-msgid "Image"
-msgstr "Image"
-
-#: .\blog\models.py:6
+#: .\blog\models.py:7 .\blog\models.py:32 .\pages\models.py:22
 msgid "Title"
 msgstr "Title"
 
-#: .\blog\models.py:7
+#: .\blog\models.py:8
 #, fuzzy
 #| msgid "Description"
 msgid "Description "
 msgstr "Description"
 
-#: .\blog\models.py:8
+#: .\blog\models.py:10 .\blog\models.py:43 .\products\models.py:31
+#: .\products\models.py:63 .\products\models.py:85 .\products\models.py:107
+msgid "Image"
+msgstr "Image"
+
+#: .\blog\models.py:11
 msgid "View"
 msgstr "View"
 
-#: .\blog\models.py:9 .\blog\models.py:19
+#: .\blog\models.py:12 .\blog\models.py:54
 msgid "Created time"
 msgstr "Created time"
 
-#: .\blog\models.py:10
+#: .\blog\models.py:13
 msgid "Updated time"
 msgstr "Updated time"
 
-#: .\blog\models.py:13 .\blog\models.py:20
+#: .\blog\models.py:14 .\review\models.py:8
+msgid "rate"
+msgstr ""
+
+#: .\blog\models.py:17 .\blog\models.py:55
 msgid "Blog"
 msgstr "Blog"
 
-#: .\blog\models.py:14
+#: .\blog\models.py:18
 msgid "Blogs"
 msgstr "Blogs"
 
-#: .\blog\models.py:17
+#: .\blog\models.py:33 .\blog\models.py:41 .\products\models.py:28
+#: .\products\models.py:52 .\products\models.py:83
+msgid "Description"
+msgstr "Description"
+
+#: .\blog\models.py:52
 msgid "Text"
 msgstr "Text"
 
-#: .\blog\models.py:18 .\products\models.py:22 .\products\models.py:34
+#: .\blog\models.py:53 .\products\models.py:27 .\products\models.py:51
+#: .\products\models.py:81
 msgid "Name"
 msgstr "Name"
 
-#: .\blog\models.py:23
+#: .\blog\models.py:58
 msgid "Comment"
 msgstr "Comment"
 
-#: .\blog\models.py:24
+#: .\blog\models.py:59
 msgid "Comments"
 msgstr "Comments"
 
@@ -72,7 +83,7 @@ msgstr "Comments"
 msgid "Full name"
 msgstr "Full name"
 
-#: .\contact\models.py:6 .\distributors\models.py:6
+#: .\contact\models.py:6 .\distributors\models.py:6 .\users\models.py:7
 msgid "Phone number"
 msgstr "Phone number"
 
@@ -80,7 +91,7 @@ msgstr "Phone number"
 msgid "Country"
 msgstr "Country"
 
-#: .\contact\models.py:8 .\distributors\models.py:8
+#: .\contact\models.py:8 .\distributors\models.py:8 .\users\models.py:6
 msgid "Email address"
 msgstr "Email address"
 
@@ -108,6 +119,64 @@ msgstr "Specification"
 msgid "Is active ?"
 msgstr "Is active ?"
 
+#: .\order\models.py:6
+msgid "Packaging"
+msgstr "Packaging"
+
+#: .\order\models.py:7
+msgid "Shipped"
+msgstr "Shipped"
+
+#: .\order\models.py:8
+msgid "Canceled"
+msgstr "Canceled"
+
+#: .\order\models.py:9
+msgid "Awaiting pickup"
+msgstr ""
+
+#: .\order\models.py:10
+msgid "Completed"
+msgstr ""
+
+#: .\order\models.py:12
+msgid "order_status"
+msgstr ""
+
+#: .\order\models.py:13 .\review\models.py:7 .\users\models.py:14
+msgid "user"
+msgstr ""
+
+#: .\order\models.py:14
+msgid "promocode"
+msgstr ""
+
+#: .\order\models.py:17
+msgid "Order"
+msgstr ""
+
+#: .\order\models.py:18
+msgid "Orders"
+msgstr ""
+
+#: .\order\models.py:21
+msgid "order"
+msgstr ""
+
+#: .\order\models.py:22 .\products\models.py:106 .\review\models.py:6
+#, fuzzy
+#| msgid "Product"
+msgid "product"
+msgstr "Product"
+
+#: .\order\models.py:23
+msgid "quantity"
+msgstr ""
+
+#: .\order\models.py:24
+msgid "discount"
+msgstr ""
+
 #: .\pages\models.py:6
 #, fuzzy
 #| msgid "Description"
@@ -125,6 +194,20 @@ msgstr "Email"
 #: .\pages\models.py:15
 msgid "Subscribed at"
 msgstr "Subscribed at"
+
+#: .\pages\models.py:23
+#, fuzzy
+#| msgid "Title"
+msgid "Subtitle"
+msgstr "Title"
+
+#: .\pages\models.py:24
+msgid "Main content"
+msgstr ""
+
+#: .\pages\models.py:26
+msgid "Main image"
+msgstr ""
 
 #: .\products\models.py:6
 msgid "Type"
@@ -166,34 +249,74 @@ msgstr "Weight"
 msgid "Supplied in"
 msgstr "Supplied in"
 
-#: .\products\models.py:23 .\products\models.py:37
-msgid "Description"
-msgstr "Description"
-
-#: .\products\models.py:26 .\products\models.py:39
-msgid "Category"
-msgstr "Category"
-
-#: .\products\models.py:27
-msgid "Categories"
-msgstr "Categories"
-
-#: .\products\models.py:35
-msgid "Model"
-msgstr "Model"
-
-#: .\products\models.py:36
-msgid "Features"
-msgstr "Features"
-
-#: .\products\models.py:38
+#: .\products\models.py:18 .\products\models.py:87
 msgid "Specification"
 msgstr "Specification"
 
-#: .\products\models.py:42
+#: .\products\models.py:19
+#, fuzzy
+#| msgid "Specification"
+msgid "Specifications"
+msgstr "Specification"
+
+#: .\products\models.py:34 .\products\models.py:48 .\products\models.py:88
+msgid "Category"
+msgstr "Category"
+
+#: .\products\models.py:35
+msgid "Categories"
+msgstr "Categories"
+
+#: .\products\models.py:60
+#, fuzzy
+#| msgid "Category"
+msgid "Parent SubCategory"
+msgstr "Category"
+
+#: .\products\models.py:66
+#, fuzzy
+#| msgid "Category"
+msgid "Subcategory"
+msgstr "Category"
+
+#: .\products\models.py:67
+#, fuzzy
+#| msgid "Categories"
+msgid "Subcategories"
+msgstr "Categories"
+
+#: .\products\models.py:82
+msgid "Features"
+msgstr "Features"
+
+#: .\products\models.py:86
+msgid "Model"
+msgstr "Model"
+
+#: .\products\models.py:91
 msgid "Product"
 msgstr "Product"
 
-#: .\products\models.py:43
+#: .\products\models.py:92
 msgid "Products"
 msgstr "Products"
+
+#: .\products\models.py:110
+#, fuzzy
+#| msgid "Product"
+msgid "Product Image"
+msgstr "Product"
+
+#: .\products\models.py:111
+#, fuzzy
+#| msgid "Products"
+msgid "Product Images"
+msgstr "Products"
+
+#: .\users\models.py:8
+msgid "Is distributor ?"
+msgstr ""
+
+#: .\users\models.py:15
+msgid "promo_code"
+msgstr ""

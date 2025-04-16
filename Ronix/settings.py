@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'distributors',
     'products',
     'rest_framework',
-    'modeltranslation',
-    'modeltranslation.translator',
+    'users',
+    'parler',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +120,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-TRANSLATABLE_MODEL_MODULES = ["products.models",]
+
+LANGUAGE_CODE = 'uz'
+LANGUAGE_COOKIE_NAME = "lang"
 
 LANGUAGES = (
     ('en', 'English'),
@@ -128,19 +130,32 @@ LANGUAGES = (
     ('ru', 'Russian'),
 )
 
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en'},
+        {'code': 'uz'},
+        {'code': 'ru'},
+    ),
+    'default': {
+        'fallbacks': ['en'],
+        'hide_untranslated': False,
+    }
+}
+
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-IS_MONOLINGUAL=False
-
-LANGUAGE_CODE = 'en'
 
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
 TIME_ZONE = 'Asia/Tashkent'
+
+JAZZMIN_SETTINGS = {
+    'language_chooser': True,
+    'site_brand': "Ronix site",
+}
 
 
 # Static files (CSS, JavaScript, Images)
