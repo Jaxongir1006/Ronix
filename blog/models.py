@@ -2,6 +2,20 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel,TranslatedFields
 
+class BlogCategory(TranslatableModel):
+    translation = TranslatedFields(
+        title = models.CharField(max_length=200, verbose_name=_('Title'))
+    )
+
+    image = models.ImageField(upload_to='blog_category/', verbose_name=_('Image'))
+    
+    def __str__(self):
+        return self.safe_translation_getter('title', any_language=True) or "Unnamed title"
+    
+    @property
+    def imageURL(self):
+        return self.image.url if self.image else ''
+
 class Blog(TranslatableModel):
     translations = TranslatedFields(
         title = models.CharField(max_length=200, verbose_name=_('Title')),
@@ -34,7 +48,7 @@ class BlogContent(TranslatableModel):
     )
 
     def __str__(self):
-        return self.safe_translation_getter('title', any_language=True) or "Unnamed titlej"
+        return self.safe_translation_getter('title', any_language=True) or "Unnamed title"
 
 class BlogImages(TranslatableModel):
     translations = TranslatedFields(
@@ -43,7 +57,7 @@ class BlogImages(TranslatableModel):
     image = models.ImageField(upload_to='blog/', verbose_name=_('Image'))
 
     @property
-    def ImageURL(self):
+    def imageURL(self):
         if self.image:
             return self.image.url
         return ''

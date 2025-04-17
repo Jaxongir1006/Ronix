@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
+from rest_framework.exceptions import ValidationError
 
 class Specification(models.Model):
     type = models.CharField(max_length=100, verbose_name = _('Type'))
@@ -106,17 +107,21 @@ class Product(TranslatableModel):
 
 class ProductImages(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))
-    image = models.ImageField(upload_to='products/', verbose_name=_('Image'))
+    image = models.ImageField(upload_to='products/', verbose_name=_('Image'), blank=True, null=True)
+    video = models.FileField(upload_to='videos/',verbose_name=_('Video'), blank=True,null=True)
 
     class Meta:
         verbose_name = _("Product Image")
         verbose_name_plural = _("Product Images")
 
     def __str__(self):
-        return f"{self.product} - Image"
+        return f"{self.product} - Image/Video"
 
+
+    def clean(self):
+        if not self.image and not self.video:
+            raise ValidationError(_('At least one of image or video must be provided.'))   
+    
     @property
-    def imageURL(self):
-        if self.image:
-            return self.image.url
-        return ""    
+    def media_url(self):
+        return self.image.url if self.image else (self.video.url if self.video else "")
