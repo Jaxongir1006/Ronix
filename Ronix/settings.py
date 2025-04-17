@@ -46,6 +46,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'parler',
+    'locations',
+    'review',
+    'pages',
+    'order',
+    'core',   
 ]
 
 MIDDLEWARE = [
