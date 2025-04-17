@@ -104,7 +104,6 @@ class Product(TranslatableModel):
         else:
             return ''
 
-
 class ProductImages(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))
     image = models.ImageField(upload_to='products/', verbose_name=_('Image'), blank=True, null=True)
@@ -125,3 +124,21 @@ class ProductImages(models.Model):
     @property
     def media_url(self):
         return self.image.url if self.image else (self.video.url if self.video else "")
+    
+class ProductDetail(TranslatableModel):
+    
+    main_image = models.ImageField(upload_to='products/', verbose_name=_('Main image'))
+
+    translations = TranslatedFields(
+        title = models.CharField(max_length=200, verbose_name=_('Title')),
+        description = models.TextField(verbose_name=_('Description'))
+    )
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'))
+
+    @property
+    def imageURL(self):
+        return self.main_image.url if self.main_image else ''
+    
+    def __str__(self):
+        return self.safe_translation_getter('title', any_language=True) or 'Unnamed title'
