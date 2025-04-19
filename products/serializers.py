@@ -28,19 +28,18 @@ class ProductSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
+    imageURL = serializers.ReadOnlyField()
 
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'image', 'imageURL']
 
     def get_name(self, obj):
-        lang = translation.get_language()
-        return getattr(obj, f'name_{lang}', obj.name)
-    
-    def get_description(self, obj):
-        lang = translation.get_language()
-        return getattr(obj, f"description_{lang}", obj.description)
+        return obj.safe_translation_getter('name', any_language=True)
 
+    def get_description(self, obj):
+        return obj.safe_translation_getter('description', any_language=True)
+    
 
 class ProductByCategorySerializer(serializers.ModelSerializer):
     class Meta:

@@ -27,11 +27,12 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('products.api')),
+    path('', include('home.api')),
     # path('wholesale/', include('locations.api')),
     # path('', include('blog.api')),
     # path('contact-us/', include('contact.api')),
     # path('distributor/', include('distributors.api')),
-    # path('', include('users.api')),
+    path('', include('users.api')),
     # path('', include('review.api')),
 )
 

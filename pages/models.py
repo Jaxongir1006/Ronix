@@ -21,7 +21,6 @@ class AboutUs(TranslatableModel):
     translations = TranslatedFields(
         title = models.CharField(max_length=255, verbose_name=_("Title")),
         subtitle = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Subtitle")),
-        content = models.TextField(verbose_name=_("Main content"))
     )
     image = models.ImageField(upload_to='aboutus/', blank=True, null=True, verbose_name=_("Main image"))
     
@@ -35,3 +34,10 @@ class AboutUs(TranslatableModel):
         else:
             return ''
     
+# class ContentAboutUs(TranslatableModel):
+#     translations = TranslatedFields(
+#         title = models.CharField(max_length=200, verbose_name=_('Title')),
+#         description = models.TextField(verbose_name=_('Description'))
+#     )
+#     image = models.ImageField(upload_to='aboutus/', verbose_name=_('About us'), blank=True,null=True)
+

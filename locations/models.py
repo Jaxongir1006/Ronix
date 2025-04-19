@@ -22,5 +22,7 @@ class Content(TranslatableModel):
         description = models.TextField(verbose_name=_('Desciption'))
     )
 
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='contents', verbose_name=_('Country'))
+
     def __str__(self):
         return self.safe_translation_getter('title', any_language=True) or "Unnamed title"

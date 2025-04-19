@@ -15,7 +15,7 @@ class Specification(models.Model):
     weight = models.CharField(max_length=100, verbose_name = _('Weight'))
     supplied_in = models.CharField(max_length=100, verbose_name = _('Supplied in'))
 
-    class Meta:
+    class Meta: 
         verbose_name = _("Specification")
         verbose_name_plural = _('Specifications')
 
@@ -88,7 +88,7 @@ class Product(TranslatableModel):
     image = models.ImageField(upload_to='products/', verbose_name = _('Image'))
     model = models.CharField(max_length=100, verbose_name = _('Model'))
     specification = models.ForeignKey(Specification, on_delete=models.CASCADE, related_name='products', verbose_name = _('Specification'))
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name = _('Category'))
+    subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='products', verbose_name = _('Category'))
 
     class Meta:
         verbose_name = _("Product")
@@ -127,11 +127,11 @@ class ProductImages(models.Model):
     
 class ProductDetail(TranslatableModel):
     
-    main_image = models.ImageField(upload_to='products/', verbose_name=_('Main image'))
+    main_image = models.ImageField(upload_to='products/', verbose_name=_('Main image'), blank=True, null=True)
 
     translations = TranslatedFields(
-        title = models.CharField(max_length=200, verbose_name=_('Title')),
-        description = models.TextField(verbose_name=_('Description'))
+        title = models.CharField(max_length=200, verbose_name=_('Title'), blank=True, null=True),
+        description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
     )
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'))

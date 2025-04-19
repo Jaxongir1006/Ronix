@@ -25,7 +25,6 @@ class Blog(TranslatableModel):
     views = models.IntegerField(default=0, verbose_name=_('View'))
     created_time = models.DateTimeField(auto_now_add=True,verbose_name=_('Created time')) 
     updated_time = models.DateTimeField(auto_now=True, verbose_name=_('Updated time'))
-    rate = models.IntegerField(verbose_name= _("rate"))
 
     class Meta:
         verbose_name = _("Blog")
@@ -74,3 +73,8 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class BlogReview(models.Model):
+    rate = models.PositiveSmallIntegerField(default=0, verbose_name=_('Rate'))
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='reviews', verbose_name=_('Blog'))

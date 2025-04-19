@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'pages',
     'order',
     'core',
+    'home',
+    'series',
 ]
 
 MIDDLEWARE = [

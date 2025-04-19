@@ -15,14 +15,12 @@ class Review(models.Model):
     def __str__(self):
         return f"Review for {self.product.name} by {self.user.username}"
 
-class Rate(TranslatableModel):
-    translations = TranslatedFields(
-        power_and_quality=models.PositiveSmallIntegerField(default=0, verbose_name=_('Power And Quality')),
-        easy_to_use=models.PositiveSmallIntegerField(default=0, verbose_name=_('Easy To Use')),
-        safety=models.PositiveSmallIntegerField(default=0, verbose_name=_('Safety')),
-        ergonomy=models.PositiveSmallIntegerField(default=0, verbose_name=_('Ergonomy')),
-        cost=models.PositiveSmallIntegerField(default=0, verbose_name=_('Cost')),
-    )
+class Rate(models.Model):
+    power_and_quality=models.PositiveSmallIntegerField(default=0, verbose_name=_('Power And Quality')),
+    easy_to_use=models.PositiveSmallIntegerField(default=0, verbose_name=_('Easy To Use')),
+    safety=models.PositiveSmallIntegerField(default=0, verbose_name=_('Safety')),
+    ergonomy=models.PositiveSmallIntegerField(default=0, verbose_name=_('Ergonomy')),
+    cost=models.PositiveSmallIntegerField(default=0, verbose_name=_('Cost')),
     review = models.OneToOneField(Review, on_delete=models.CASCADE)
 
     def average_rating(self):
@@ -45,19 +43,3 @@ class AboutContent(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter('title', any_language=True) or "Unnamed title"
-  
-class CountryContent(models.Model):
-    name = models.CharField(max_length=200)
-    
-    def __str__(self):
-        return self.name
-
-
-class InfoContent(models.Model):
-    city = models.CharField(max_length=300)
-    address = models.CharField(max_length=200)
-    email = models.EmailField(unique=True)    
-    phone = models.CharField(max_length=15)
-    
-    def __str__(self):
-        return self.city
