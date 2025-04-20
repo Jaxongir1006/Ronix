@@ -43,3 +43,20 @@ class AboutContent(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter('title', any_language=True) or "Unnamed title"
+  
+class CountryContent(models.Model):
+    name = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.name
+
+
+class InfoContent(models.Model):
+    city = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    email = models.EmailField(unique=True)    
+    phone = models.CharField(max_length=15)
+    
+    def __str__(self):
+        return self.city
+    

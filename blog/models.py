@@ -42,7 +42,7 @@ class Blog(TranslatableModel):
 
 class BlogContent(TranslatableModel):
     translations = TranslatedFields(
-        title = models.CharField(max_length=200, verbose_name=_('Title')),
+        title = models.CharField(max_length=200, verbose_name=_('Title'), blank=True, null=True),
         description = models.TextField(verbose_name=_('Description'))
     )
 

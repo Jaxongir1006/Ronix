@@ -6,15 +6,19 @@ class Country(TranslatableModel):
     translations = TranslatedFields(
         name = models.CharField(max_length=100, verbose_name=_('Name')),
     )
-
-    video = models.FileField(upload_to='marketing/', verbose_name=_('Video'))
+    flag = models.ImageField(upload_to='flags/', verbose_name=_('Flag'))
+    languages = models.CharField(max_length=100, verbose_name=_('Languages'))
+    continent = models.CharField(max_length=100, choices=[
+        ('asia_pacific', 'Asia - Pacific'),
+        ('europe', 'Europe'),
+        ('south_america', 'South America'),
+        ('africa', 'Africa'),
+    ], verbose_name=_('Continent'))
 
     def __str__(self):
-        return self.safe_translation_getter('name', any_language=True) or "Unnamed name"
-    
-    @property
-    def media_url(self):
-        return self.video.url if self.video else ''
+        return self.safe_translation_getter('name', any_language=True) or 'Unnamed country'
+
+
     
 class Content(TranslatableModel):
     translations = TranslatedFields(
