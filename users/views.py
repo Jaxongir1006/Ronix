@@ -5,6 +5,8 @@ from rest_framework import status
 
 class UserViewset(ViewSet):
     def create(self, request):
+        if request.user.is_authenticated:
+            return Response({"message": "You are already logged in."}, status=status.HTTP_400_BAD_REQUEST)
         serializer = UserSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()

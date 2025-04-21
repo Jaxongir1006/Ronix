@@ -3,24 +3,25 @@ from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 from rest_framework.exceptions import ValidationError
 
-class Specification(models.Model):
-    type = models.CharField(max_length=100, verbose_name = _('Type'))
-    size = models.CharField(max_length=100, verbose_name = _('Size'))
-    power = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Power'))
-    voltage = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Voltage'))
-    frequency = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Frequency'))
-    speed = models.CharField(max_length=100, verbose_name = _('Speed'))
-    capacity_wood = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Capacity in wood'))
-    capacity_steel = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Capacity in steel'))
-    weight = models.CharField(max_length=100, verbose_name = _('Weight'))
-    supplied_in = models.CharField(max_length=100, verbose_name = _('Supplied in'))
-
+class Specification(TranslatableModel):
+    translations = TranslatedFields(
+        type = models.CharField(max_length=100, verbose_name = _('Type')),
+        size = models.CharField(max_length=100, verbose_name = _('Size')),
+        power = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Power')),
+        voltage = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Voltage')),
+        frequency = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Frequency')),
+        speed = models.CharField(max_length=100, verbose_name = _('Speed')),
+        capacity_wood = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Capacity in wood')),
+        capacity_steel = models.CharField(max_length=100, blank=True, null=True, verbose_name = _('Capacity in steel')),
+        weight = models.CharField(max_length=100, verbose_name = _('Weight')),
+        supplied_in = models.CharField(max_length=100, verbose_name = _('Supplied in'))
+    )
     class Meta: 
         verbose_name = _("Specification")
         verbose_name_plural = _('Specifications')
 
     def __str__(self):
-        return f'{self.type}'
+        return self.safe_translation_getter('type', any_language=True) or 'Unnamed Specification'
 
 class Category(TranslatableModel):
 
@@ -82,6 +83,7 @@ class Product(TranslatableModel):
         name = models.CharField(max_length=200, verbose_name = _('Name')),
         features = models.TextField(verbose_name = _('Features')),
         description = models.TextField(verbose_name = _('Description'))
+        made_in = models.CharField(max_length=200, verbose_name = _('Made in')),
     )
     barcode_color = models.CharField(max_length=200, verbose_name=_('Barcode for Color Box'), blank=True, null=True)
     barcode_carton = models.CharField(max_length=200, verbose_name=_('Barcode for Inner Carton'),blank=True,null=True)

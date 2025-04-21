@@ -36,7 +36,7 @@ class SeriesCategory(TranslatableModel):
     def media_url(self):
         return self.image.url if self.image else (self.video.url if self.video else "")
 
-class Subcategory(TranslatableModel):
+class SeriesCategoryDetail(TranslatableModel):
     translations = TranslatedFields(
         title = models.CharField(max_length=200, verbose_name=_('Title'), blank=True, null=True),
         description = models.TextField(verbose_name=_('Description'), blank=True, null=True)

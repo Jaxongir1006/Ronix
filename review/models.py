@@ -35,28 +35,28 @@ class Rate(models.Model):
     def __str__(self):
         return f"Rating for review #{self.review.id}"
 
-class AboutContent(TranslatableModel):
-    translations = TranslatedFields(
-        title = models.CharField(max_length=200),
-        description = models.TextField()
-    )
+# class AboutContent(TranslatableModel):
+#     translations = TranslatedFields(
+#         title = models.CharField(max_length=200),
+#         description = models.TextField()
+#     )
 
-    def __str__(self):
-        return self.safe_translation_getter('title', any_language=True) or "Unnamed title"
+#     def __str__(self):
+#         return self.safe_translation_getter('title', any_language=True) or "Unnamed title"
   
-class CountryContent(models.Model):
-    name = models.CharField(max_length=200)
+# class CountryContent(models.Model):
+#     name = models.CharField(max_length=200)
     
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
-class InfoContent(models.Model):
-    city = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    email = models.EmailField(unique=True)    
-    phone = models.CharField(max_length=15)
+# class InfoContent(models.Model):
+#     city = models.CharField(max_length=200)
+#     address = models.CharField(max_length=200)
+#     email = models.EmailField(unique=True)    
+#     phone = models.CharField(max_length=15)
     
-    def __str__(self):
-        return self.city
+#     def __str__(self):
+#         return self.city
     

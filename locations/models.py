@@ -18,7 +18,6 @@ class Country(TranslatableModel):
     def __str__(self):
         return self.safe_translation_getter('name', any_language=True) or 'Unnamed country'
 
-
     
 class Content(TranslatableModel):
     translations = TranslatedFields(

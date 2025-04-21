@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from .models import Product,Category
 from django.utils import translation
+from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
 
-
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Product)
     name = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     features = serializers.SerializerMethodField()
@@ -25,14 +26,15 @@ class ProductSerializer(serializers.ModelSerializer):
         lang = translation.get_language()
         return getattr(obj, f"features_{lang}", obj.features)
     
-class CategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Category)
     name = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     imageURL = serializers.ReadOnlyField()
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'description', 'image', 'imageURL']
+        fields = ['id', 'name', 'description', 'image', 'imageURL', 'translations']
 
     def get_name(self, obj):
         return obj.safe_translation_getter('name', any_language=True)
