@@ -82,7 +82,7 @@ class Product(TranslatableModel):
     translations = TranslatedFields(
         name = models.CharField(max_length=200, verbose_name = _('Name')),
         features = models.TextField(verbose_name = _('Features')),
-        description = models.TextField(verbose_name = _('Description'))
+        description = models.TextField(verbose_name = _('Description')),
         made_in = models.CharField(max_length=200, verbose_name = _('Made in')),
     )
     barcode_color = models.CharField(max_length=200, verbose_name=_('Barcode for Color Box'), blank=True, null=True)
