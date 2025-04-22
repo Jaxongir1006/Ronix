@@ -12,13 +12,4 @@ class HomeBannerSerializer(TranslatableModelSerializer):
         model = HomeBanner
         fields = ['id', 'title', 'subtitle', 'imageURL', 'translations']
 
-class CustomerReviewSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=CustomerReview)
-    title = serializers.CharField(source='title')
-    description = serializers.CharField(source='description')
-    videoURL = serializers.ReadOnlyField()
-
-    class Meta:
-        model = CustomerReview
-        fields = ['id', 'title', 'description', 'videoURL', 'translations']
 

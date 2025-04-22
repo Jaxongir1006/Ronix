@@ -21,3 +21,4 @@ from .serializer import DistributorSerializer
 class DistributorViewSet(viewsets.ModelViewSet):
     queryset = Distributor.active.all()
     serializer_class = DistributorSerializer
+    http_method_names = ['post', 'put', 'patch', 'delete']

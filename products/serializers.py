@@ -43,9 +43,3 @@ class CategorySerializer(TranslatableModelSerializer):
         return obj.safe_translation_getter('description', any_language=True)
     
 
-class ProductByCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ['name', 'description', 'features', 'category']
-        depth = 2
-    

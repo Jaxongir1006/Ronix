@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 class HomePageContentViewSet(ViewSet):
     
     @action(detail=False, methods=['get'])
-    def get_banners(self, request):
+    def banners(self, request):
         banners = HomeBanner.objects.all()
         
         banner_data = HomeBannerSerializer(banners, many=True).data
@@ -15,7 +15,7 @@ class HomePageContentViewSet(ViewSet):
         return Response({"banners": banner_data}, status=status.HTTP_200_OK)
     
     @action(detail=False, methods=['get'])
-    def get_reviews(self, request):
+    def reviews(self, request):
         reviews = CustomerReview.objects.all()
         
         review_data = CustomerReviewSerializer(reviews, many=True).data

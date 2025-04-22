@@ -35,6 +35,23 @@ class Rate(models.Model):
     def __str__(self):
         return f"Rating for review #{self.review.id}"
 
+class CustomerReview(TranslatableModel):
+    translations = TranslatedFields(
+        title = models.CharField(max_length=200, verbose_name=_('Title')),
+        description = models.TextField(verbose_name=_('Description'))
+    )
+
+    video = models.FileField(upload_to='customer_review/')
+
+    def __str__(self):
+        return self.safe_translation_getter('title', any_language=True) or 'Unnamed title'
+    
+    @property
+    def videoURL(self):
+        return self.video.url if self.video else ''
+
+
+
 # class AboutContent(TranslatableModel):
 #     translations = TranslatedFields(
 #         title = models.CharField(max_length=200),
