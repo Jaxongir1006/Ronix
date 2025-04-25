@@ -1,5 +1,4 @@
-from rest_framework import serializers
-from .models import HomeBanner
+from .models import HomeBanner, CustomerReview
 from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
 
 class HomeBannerSerializer(TranslatableModelSerializer):
@@ -10,3 +9,9 @@ class HomeBannerSerializer(TranslatableModelSerializer):
         fields = ['id', 'title', 'subtitle', 'imageURL', 'translations']
 
 
+class customerReviewSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=CustomerReview)
+
+    class Meta:
+        model = CustomerReview
+        fields = ['id', 'title', 'description', 'videoURL', 'translations']

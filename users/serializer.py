@@ -18,4 +18,5 @@ class UserSerializer(serializers.ModelSerializer):
         if not email and not phone:
             raise serializers.ValidationError(_("Email yoki telefon raqamdan hech bo'lmaganda bittasi kerak."))
 
+
         return attrs

@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'order',
     'core',
     'home',
-    'series',
     'parler_rest',
 ]
 

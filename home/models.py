@@ -24,3 +24,18 @@ class HomeBanner(TranslatableModel):
     class Meta:
         verbose_name = _("Home Banner")
         verbose_name_plural = _("Home Banners")
+
+class CustomerReview(TranslatableModel):
+    translations = TranslatedFields(
+        title = models.CharField(max_length=200, verbose_name=_('Title')),
+        description = models.TextField(verbose_name=_('Description'))
+    )
+
+    video = models.FileField(upload_to='reviews/', verbose_name=_('Video'))
+
+    def str__(self):
+        return self.safe_translation_getter('title', any_language=True) or 'Unnamed title'
+    
+    @property
+    def videoURL(self):
+        return self.video.url if self.video else ''

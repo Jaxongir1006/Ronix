@@ -1,13 +1,14 @@
-from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
-from .models import HomeBanner
-from .serializers import HomeBannerSerializer
-from rest_framework import status
-class HomePageContentViewSet(ViewSet):
+from rest_framework.viewsets import ModelViewSet
+from .models import HomeBanner,CustomerReview
+from .serializers import HomeBannerSerializer,customerReviewSerializer
+class HomePageContentViewSet(ModelViewSet):
+    queryset = HomeBanner.objects.all()
+    serializer_class = HomeBannerSerializer
+    http_method_names = ['get']
 
-    def list(self, request):
-        banners = HomeBanner.objects.all()
-        
-        banner_data = HomeBannerSerializer(banners, many=True).data
 
-        return Response({"banners": banner_data}, status=status.HTTP_200_OK)
+class CustomerReviewViewSet(ModelViewSet):
+    queryset = CustomerReview.objects.all()
+    serializer_class = customerReviewSerializer
+    http_method_names = ['get']
+
