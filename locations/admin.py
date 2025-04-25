@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Branch
+from parler.admin import TranslatableAdmin
 
-# Register your models here.
+@admin.register(Branch)
+class BranchAdmin(TranslatableAdmin):
+    list_display = ('__str__',)

@@ -19,21 +19,24 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n'))
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('', include('products.api')),
+    path('', include('home.api')),
+    path('', include('locations.api')),
+    path('', include('contact.api')),
+    path('', include('core.api')),
+    path('', include('users.api')),
+    path('', include('order.api')),
+    path('', include('pages.api')),
 ]
 
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
-    path('', include('products.api')),
-    path('', include('home.api')),
-    path('wholesale/', include('locations.api')),
-    path('', include('blog.api')),
-    path('', include('contact.api')),
-    path('', include('distributors.api')),
-    path('', include('users.api')),
-    path('', include('review.api')),
 )
 
 if settings.DEBUG:

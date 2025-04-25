@@ -1,45 +1,52 @@
 from rest_framework import serializers
-from .models import Product,Category
-from django.utils import translation
+from .models import Product,Category,SubCategory,Specification,ProductDetail,ProductImages
 from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
+
+class SpecificationSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Specification)
+
+    class Meta:
+        model = Specification
+        fields = "__all__"
+
+class ProductDetailSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=ProductDetail)
+
+    class Meta:
+        model = ProductDetail
+        fields = "__all__"
+
+class ProductImagesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductImages
+        fields = "__all__"
 
 class ProductSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
-    name = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
-    features = serializers.SerializerMethodField()
+    specifications = SpecificationSerializer(read_only=True)
+    details = ProductDetailSerializer(many=True,read_only=True)
+    images = ProductImagesSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product
         fields = '__all__'
         depth = 2
-    
-    def get_name(self, obj):
-        lang = translation.get_language()
-        return getattr(obj, f"name_{lang}", obj.name)
 
-    def get_description(self, obj):
-        lang = translation.get_language()
-        return getattr(obj, f"description_{lang}", obj.description)
-    
-    def get_features(self, obj):
-        lang = translation.get_language()
-        return getattr(obj, f"features_{lang}", obj.features)
+
+class SubCategorySerializer(TranslatableModelSerializer):
+    translation = TranslatedFieldsField(shared_model=SubCategory)
+
+    class Meta:
+        model = SubCategory
+        fields = "__all__"
     
 class CategorySerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Category)
-    name = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
-    imageURL = serializers.ReadOnlyField()
+    # subcategories = SubCategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Category
         fields = ['id', 'name', 'description', 'image', 'imageURL', 'translations']
 
-    def get_name(self, obj):
-        return obj.safe_translation_getter('name', any_language=True)
-
-    def get_description(self, obj):
-        return obj.safe_translation_getter('description', any_language=True)
-    
 

@@ -5,15 +5,13 @@ from .manager import UserManager
 
 class User(AbstractUser):
     email = models.EmailField(verbose_name=_('Email address'), unique=True, blank=True, null=True)
-    phone_number = models.IntegerField(verbose_name=_('Phone number'), null=True, blank=True)
-    is_distributor = models.BooleanField(default=False, verbose_name=_('Is distributor ?'))
+    phone_number = models.CharField(max_length=20, verbose_name=_('Phone number'), blank=True, null=True)
 
     objects = UserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
     
-class PromoCode(models.Model):
-    user = models.ForeignKey(verbose_name=_("user"),to=User,on_delete=models.CASCADE)
-    code = models.CharField(verbose_name=_("promo_code"), max_length=10)
-
+    class Meta:
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")

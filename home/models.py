@@ -21,18 +21,6 @@ class HomeBanner(TranslatableModel):
     def imageURL(self):
         return self.image.url if self.image else ''
     
-class CustomerReview(TranslatableModel):
-    translations = TranslatedFields(
-        title = models.CharField(max_length=200, verbose_name=_('Title')),
-        description = models.TextField(verbose_name=_('Description'))
-    )
-
-    video = models.FileField(upload_to='customer_review/')
-
-    def __str__(self):
-        return self.safe_translation_getter('title', any_language=True) or 'Unnamed title'
-    
-    @property
-    def videoURL(self):
-        return self.video.url if self.video else ''
-
+    class Meta:
+        verbose_name = _("Home Banner")
+        verbose_name_plural = _("Home Banners")

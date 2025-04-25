@@ -40,14 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'parler',
-    'blog',
     'contact',
-    'distributors',
     'products',
     'rest_framework',
+    'rest_framework_simplejwt',
     'users',
     'locations',
-    'review',
     'pages',
     'order',
     'core',
@@ -73,7 +71,7 @@ ROOT_URLCONF = 'Ronix.urls'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://redis-test:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -95,12 +93,23 @@ TEMPLATES = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jahongir192006@gmail.com'
+EMAIL_HOST_PASSWORD = 'aczm yfwv wuow giki'
+
+
 WSGI_APPLICATION = 'Ronix.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
@@ -143,7 +152,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 
-LANGUAGE_CODE = 'uz'
+LANGUAGE_CODE = 'en'
 LANGUAGE_COOKIE_NAME = "lang"
 
 LANGUAGES = (
@@ -184,6 +193,11 @@ JAZZMIN_SETTINGS = {
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'static_root/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 
 MEDIA_URL = 'media/'

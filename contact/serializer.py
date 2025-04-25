@@ -4,7 +4,7 @@ from rest_framework import serializers
 class ContactUsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactUs
-        fields = ['name', 'email', 'phone', 'message', 'country', 'company']
+        fields = ['name', 'email', 'phone', 'message']
 
     def create(self, validated_data):
         contact_us = ContactUs.objects.create(**validated_data)
@@ -14,8 +14,6 @@ class ContactUsSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.message = validated_data.get('message', instance.message)
-        instance.country = validated_data.get('country', instance.country)
-        instance.company = validated_data.get('company', instance.company)
         instance.save()
         return instance
     def validate(self, data):
@@ -27,10 +25,6 @@ class ContactUsSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Phone number is required.")
         if not data.get('message'):
             raise serializers.ValidationError("Message is required.")
-        if not data.get('country'):
-            raise serializers.ValidationError("Country is required.")
-        if not data.get('company'):
-            raise serializers.ValidationError("Company is required.")
         return data
     def to_representation(self, instance):
         rep = super().to_representation(instance)

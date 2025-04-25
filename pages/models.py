@@ -9,6 +9,10 @@ class FAQ(models.Model):
     def __str__(self):
         return self.question
     
+    class Meta:
+        verbose_name = _("FAQ")
+        verbose_name_plural = _("FAQs")
+    
 class NewsletterSubscriber(models.Model):
     name = models.CharField(max_length=150, verbose_name=_("Full name"))
     email = models.EmailField(unique=True, verbose_name=_("Email"))
@@ -17,12 +21,16 @@ class NewsletterSubscriber(models.Model):
     def __str__(self):
         return self.email
     
+    class Meta:
+        verbose_name = _("Newsletter Subscriber")
+        verbose_name_plural = _("Newsletter Subscribers")
+    
 class AboutUs(TranslatableModel):
     translations = TranslatedFields(
         title = models.CharField(max_length=255, verbose_name=_("Title")),
         subtitle = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Subtitle")),
     )
-    image = models.ImageField(upload_to='aboutus/', blank=True, null=True, verbose_name=_("Main image"))
+    image = models.ImageField(upload_to='aboutus/', blank=True, null=True, verbose_name=_("Image"))
     
     def __str__(self):
         return self.safe_translation_getter('title', any_language=True) or "Unnamed title"
@@ -33,11 +41,7 @@ class AboutUs(TranslatableModel):
             return self.imageURL
         else:
             return ''
-    
-# class ContentAboutUs(TranslatableModel):
-#     translations = TranslatedFields(
-#         title = models.CharField(max_length=200, verbose_name=_('Title')),
-#         description = models.TextField(verbose_name=_('Description'))
-#     )
-#     image = models.ImageField(upload_to='aboutus/', verbose_name=_('About us'), blank=True,null=True)
-
+        
+    class Meta:
+        verbose_name = _("About Us")
+        verbose_name_plural = _("About Us")

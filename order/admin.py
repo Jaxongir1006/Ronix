@@ -3,8 +3,8 @@ from .models import Order, OrderItem
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'status', 'promocode']
-    search_fields = ['user__username', 'status', 'promocode__code']
+    list_display = ['id', 'user', 'status']
+    search_fields = ['user__username', 'status']
     list_filter = ['status', 'user']
 
 
