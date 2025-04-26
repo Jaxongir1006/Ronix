@@ -22,4 +22,4 @@ def generate_verification_code():
 def send_email_code(to_email, code):
     subject = "Tasdiqlash kodingiz"
     message = f"Sizning tasdiqlash kodingiz: {code}"
-    send_mail(subject, message, 'jahongir192006@example.com', [to_email])
+    send_mail(subject, message, 'jahongir192006@gmail.com', [to_email], fail_silently=False)

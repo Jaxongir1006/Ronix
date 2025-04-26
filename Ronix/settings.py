@@ -31,6 +31,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
+AUTHENTICATION_BACKENDS = [
+    'users.authentication.CodeAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -39,11 +46,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'parler',
     'contact',
     'products',
     'rest_framework',
-    'rest_framework_simplejwt',
     'users',
     'locations',
     'pages',
@@ -97,7 +104,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jahongir192006@gmail.com'
-EMAIL_HOST_PASSWORD = 'aczm yfwv wuow giki'
+EMAIL_HOST_PASSWORD = 'yzwc mpdg yyij eyvv'
 
 
 WSGI_APPLICATION = 'Ronix.wsgi.application'
@@ -107,9 +114,9 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
 
 # Database

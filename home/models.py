@@ -4,11 +4,11 @@ from django.utils.translation import gettext_lazy as _
 
 class HomeBanner(TranslatableModel):
     translations = TranslatedFields(
-        title = models.CharField(max_length=200, verbose_name=_('Title')),
-        subtitle = models.CharField(max_length=200, verbose_name=_('Subtitle'))
+        title = models.CharField(max_length=200, verbose_name=_('Title'), blank=True, null=True),
+        subtitle = models.CharField(max_length=200, verbose_name=_('Subtitle'), blank=True, null=True)
     )
 
-    image = models.ImageField(upload_to='banners/', verbose_name=_('Image'))
+    image = models.ImageField(upload_to='banners/', verbose_name=_('Image'), blank=True, null=True)
 
     class Meta:
         verbose_name = 'Home Banner'
