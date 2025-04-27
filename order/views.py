@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer,OrderVerifySerializer
 from .models import Order
 
 class OrderViewSet(ViewSet):
@@ -12,8 +12,25 @@ class OrderViewSet(ViewSet):
             return Response({"message": "Order created successfully!", "order_id": order.id}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def list(self, request):
-        queryset = Order.objects.language('en').filter(user=request.user)
-        if not queryset.exists():
+        user = request.user
+
+        if not user.is_authenticated:
+            return Response({"message": "User is not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
+
+        orders = Order.objects.filter(user=user)
+        
+        if not orders.exists():
             return Response({"message": "No orders found for this user."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = OrderSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class OrderVerifyView(ViewSet):
+    def create(self, request):
+        serializer = OrderVerifySerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        tokens = serializer.save()
+        return Response({
+            "message": "User verified successfully.",
+            "tokens": tokens
+        }, status=status.HTTP_200_OK)

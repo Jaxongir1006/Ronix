@@ -1,9 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
 from .serializer import RegisterLoginSerializer, VerifyCodeSerializer
 from .models import User
-from core.utils import generate_verification_code, send_email_code
+from core.utils import generate_verification_code, send_email_code,send_sms
 
 class RegisterLoginView(viewsets.ViewSet):
     def create(self, request):
@@ -13,10 +13,8 @@ class RegisterLoginView(viewsets.ViewSet):
         phone_number = serializer.validated_data.get('phone_number')
         email = serializer.validated_data.get('email')
 
-        # Random 6 digit code
+        # Random 6   code
         code = generate_verification_code()
-        user.verification_code = code
-        user.save()
 
         if email:
             user, created = User.objects.get_or_create(
@@ -29,7 +27,12 @@ class RegisterLoginView(viewsets.ViewSet):
                 phone_number=phone_number,
                 defaults={'username': phone_number}
             )
+            send_sms(phone_number, code)
+        else:
+            return Response({"error": "Phone number or email is required."}, status=status.HTTP_400_BAD_REQUEST)
 
+        user.verification_code = code
+        user.save()
 
         return Response({"message": "Verification code sent."}, status=status.HTTP_200_OK)
 
@@ -55,9 +58,12 @@ class VerifyCodeView(viewsets.ViewSet):
             return Response({"error": "Invalid verification code."}, status=status.HTTP_400_BAD_REQUEST)
 
         user.is_verified = True
-        user.verification_code = None  # Kodni ochirib tashlaymiz
+        user.verification_code = None
         user.save()
 
-        token, _ = Token.objects.get_or_create(user=user)
+        refresh = RefreshToken.for_user(user)
 
-        return Response({"token": token.key}, status=status.HTTP_200_OK)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }, status=status.HTTP_200_OK)

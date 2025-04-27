@@ -13,18 +13,6 @@ class FAQ(models.Model):
         verbose_name = _("FAQ")
         verbose_name_plural = _("FAQs")
     
-class NewsletterSubscriber(models.Model):
-    name = models.CharField(max_length=150, verbose_name=_("Full name"))
-    email = models.EmailField(unique=True, verbose_name=_("Email"))
-    subscribed_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Subscribed at"))
-
-    def __str__(self):
-        return self.email
-    
-    class Meta:
-        verbose_name = _("Newsletter Subscriber")
-        verbose_name_plural = _("Newsletter Subscribers")
-    
 class AboutUs(TranslatableModel):
     translations = TranslatedFields(
         title = models.CharField(max_length=255, verbose_name=_("Title")),

@@ -31,8 +31,6 @@ class ProductSerializer(TranslatableModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
-        depth = 2
-
 
 class SubCategorySerializer(TranslatableModelSerializer):
     translation = TranslatedFieldsField(shared_model=SubCategory)
@@ -43,7 +41,7 @@ class SubCategorySerializer(TranslatableModelSerializer):
     
 class CategorySerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Category)
-    # subcategories = SubCategorySerializer(many=True, read_only=True)
+    subcategories = SubCategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Category
