@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderSerializer,OrderVerifySerializer,OrderListSerializer
 from .models import Order
+from django.core.cache import cache
+
 
 class OrderViewSet(ViewSet):
     def create(self, request):
@@ -21,6 +23,7 @@ class OrderViewSet(ViewSet):
             }, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     def list(self, request):
         user = request.user
         if not user.is_authenticated:
@@ -38,8 +41,5 @@ class OrderVerifyView(ViewSet):
         serializer = OrderVerifySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         tokens = serializer.save()
-        return Response({
-            "message": "User verified successfully.",
-            "tokens": tokens
-        }, status=status.HTTP_200_OK)
+        return Response({"message": "User verified successfully.","tokens": tokens}, status=status.HTTP_200_OK)
     
