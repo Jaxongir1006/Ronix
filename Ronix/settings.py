@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'core',
     'home',
     'parler_rest',
+    'card',
 ]
 
 MIDDLEWARE = [
@@ -106,6 +107,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'jahongir192006@gmail.com'
 EMAIL_HOST_PASSWORD = 'yzwc mpdg yyij eyvv'
+
+
+GOOGLE_CLIENT_ID = '496875150134-ksj8ma3vtovt5394cuijruv837l4busk.apps.googleusercontent.com'
 
 
 SIMPLE_JWT = {
@@ -227,3 +231,4 @@ MEDIA_ROOT = 'media/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

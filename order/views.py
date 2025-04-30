@@ -3,8 +3,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderSerializer,OrderVerifySerializer,OrderListSerializer
 from .models import Order
-from django.core.cache import cache
-
 
 class OrderViewSet(ViewSet):
     def create(self, request):

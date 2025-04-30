@@ -45,6 +45,5 @@ class CategorySerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'name', 'description', 'image', 'imageURL', 'translations']
-
+        fields = ['id', 'name', 'description', 'image', 'imageURL', 'translations', 'subcategories']
 

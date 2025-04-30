@@ -20,3 +20,8 @@ class VerifyCodeSerializer(serializers.Serializer):
         if not attrs.get('phone_number') and not attrs.get('email'):
             raise serializers.ValidationError(_("Phone number or email is required."))
         return attrs
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'username', 'phone_number', 'is_verified']

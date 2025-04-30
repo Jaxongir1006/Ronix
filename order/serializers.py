@@ -5,7 +5,7 @@ from core.utils import send_sms, send_email_code, generate_verification_code
 from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import User
 from django.utils.translation import gettext_lazy as _
-
+from django.core.cache import cache
 
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,9 +27,19 @@ class OrderSerializer(serializers.ModelSerializer):
         phone = validated_data.pop('phone_number', None)
         items_data = validated_data.pop('items')
 
-        if not email and not phone:
-            raise serializers.ValidationError(_("Phone number or email is required."))
+        user = self._get_or_create_user(email, phone)
 
+        if not user.is_verified:
+            self._send_verification(user, email, phone)
+            return {
+                "message": _("A verification code has been sent."),
+                "status": False
+            }
+
+        order = self._create_order(user, items_data, validated_data)
+        return order
+
+    def _get_or_create_user(self, email, phone):
         user, created = User.objects.get_or_create(
             email=email,
             defaults={
@@ -38,34 +48,29 @@ class OrderSerializer(serializers.ModelSerializer):
                 'password': get_random_string(8),
             }
         )
+        return user
 
-        if not user.is_verified:
-            code = generate_verification_code()
-            user.verification_code = code
-            user.save()
+    def _send_verification(self, user, email, phone):
+        code = generate_verification_code()
+        user.verification_code = code
+        user.save()
 
-            if email:
-                send_email_code(email, code)
-                return {
-                    "message": _("A verification code has been sent to your email."),
-                    "email": email,
-                    "status": False
-                }
-            elif phone:
-                send_sms(phone, code)
-                return {
-                    "message": _("A verification code has been sent to your phone."),
-                    "phone": phone,
-                    "status": False
-                }
+        if email:
+            send_email_code(email, code)
+        elif phone:
+            send_sms(phone, code)
+        else:
+            raise serializers.ValidationError(_("Phone number or email is required."))
 
-        # User tasdiqlangan => order va order items yaratiladi
-        order = Order.objects.create(user=user, **validated_data)
+    def _create_order(self, user, items_data, extra_data):
+        order = Order.objects.create(user=user, **extra_data)
 
-        for item_data in items_data:
-            OrderItem.objects.create(order=order, **item_data)
+        order_items = [
+            OrderItem(order=order, **item_data) for item_data in items_data
+        ]
+        OrderItem.objects.bulk_create(order_items)  # Performance uchun bulk_create ishlatyapman
 
-        return order    
+        return order
 
 
 class OrderVerifySerializer(serializers.Serializer):

@@ -104,11 +104,6 @@ class ProductViewSet(ViewSet):
 
     @action(detail=True, methods=['get'])
     def specifications(self, request, pk=None):
-        cache_key = f'product_specifications_{pk}'
-        data = cache.get(cache_key)
-        if data:
-            return Response(data, status=status.HTTP_200_OK)
-
         product = get_object_or_404(Product.objects.language('en'), pk=pk)
 
         if not hasattr(product, 'specifications') or product.specifications is None:
@@ -116,36 +111,23 @@ class ProductViewSet(ViewSet):
 
         serializer = SpecificationSerializer(product.specifications)
 
-        cache.set(cache_key, serializer.data, timeout=60*60)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['get'])
     def details(self, request, pk=None):
-        cache_key = f'product_details_{pk}'
-        data = cache.get(cache_key)
-        if data:
-            return Response(data, status=status.HTTP_200_OK)
         product = get_object_or_404(Product.objects.language('en'), pk=pk)
         if not hasattr(product, 'details') or product.details is None:
             return Response({"detail": "Product details not found."}, status=status.HTTP_404_NOT_FOUND)
         serializer = ProductDetailSerializer(product.details, many=True)
 
-        cache.set(cache_key, serializer.data, timeout=60*60)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     @action(detail=True, methods=['get'])
     def images(self, request, pk=None):
-        cache_key = f'product_images_{pk}'
-        data = cache.get(cache_key)
-        if data:
-            return Response(data, status=status.HTTP_200_OK)
         product = get_object_or_404(Product.objects.language('en'), pk=pk)
         if not hasattr(product, 'images') or product.images is None:
             return Response({"detail": "Product images not found."}, status=status.HTTP_404_NOT_FOUND)
         serializer = ProductImagesSerializer(product.images, many=True)
 
-        cache.set(cache_key, serializer.data, timeout=60*60)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
+    

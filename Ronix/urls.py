@@ -30,6 +30,7 @@ urlpatterns = [
     path('', include('users.api')),
     path('', include('order.api')),
     path('', include('pages.api')),
+    path('', include('card.api')),
 ]
 
 urlpatterns += i18n_patterns(

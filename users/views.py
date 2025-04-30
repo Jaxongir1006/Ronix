@@ -1,9 +1,12 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializer import RegisterLoginSerializer, VerifyCodeSerializer
+from .serializer import RegisterLoginSerializer, VerifyCodeSerializer,UserSerializer
 from .models import User
 from core.utils import generate_verification_code, send_email_code,send_sms
+import requests
+from rest_framework.permissions import AllowAny
+
 
 class RegisterLoginView(viewsets.ViewSet):
     def create(self, request):
@@ -64,6 +67,48 @@ class VerifyCodeView(viewsets.ViewSet):
         refresh = RefreshToken.for_user(user)
 
         return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }, status=status.HTTP_200_OK)
+
+
+class GoogleAuthViewSet(viewsets.ViewSet):
+    permission_classes = [AllowAny]
+
+    def create(self, request):
+        token = request.data.get('token')
+
+        if not token:
+            return Response({'error': 'Token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Google'dan user ma'lumotlarini olish
+        try:
+            response = requests.get(
+                f'https://www.googleapis.com/oauth2/v3/userinfo?access_token={token}'
+            )
+            user_info = response.json()
+        except Exception as e:
+            return Response({'error': 'Failed to fetch user info from Google.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        email = user_info.get('email')
+        username = user_info.get('name')
+
+        if not email:
+            return Response({'error': 'Email not found in Google account.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user, created = User.objects.get_or_create(email=email)
+        if created:
+            user.username = username
+            user.is_verified = True
+            user.save()
+
+        # JWT token yaratamiz
+        refresh = RefreshToken.for_user(user)
+
+        serializer = UserSerializer(user)
+
+        return Response({
+            'user': serializer.data,
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }, status=status.HTTP_200_OK)
