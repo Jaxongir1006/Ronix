@@ -7,7 +7,6 @@ from core.utils import generate_verification_code, send_email_code,send_sms
 import requests
 from rest_framework.permissions import AllowAny
 
-
 class RegisterLoginView(viewsets.ViewSet):
     def create(self, request):
         serializer = RegisterLoginSerializer(data=request.data)
@@ -81,7 +80,7 @@ class GoogleAuthViewSet(viewsets.ViewSet):
         if not token:
             return Response({'error': 'Token is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Google'dan user ma'lumotlarini olish
+        # Googledan user ma'lumotlarini olish
         try:
             response = requests.get(
                 f'https://www.googleapis.com/oauth2/v3/userinfo?access_token={token}'

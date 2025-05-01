@@ -2,7 +2,6 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CardSerializer
-from django.core.cache import cache
 from .models import Card
 from django.db import IntegrityError
 
@@ -21,11 +20,6 @@ class CardViewSet(ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def list(self, request):
-        cache_key = f'card_list_user_{request.user.id}'
-        data = cache.get(cache_key)
-
-        if data:
-            return Response(data, status=status.HTTP_200_OK)
 
         cards = Card.objects.filter(user=request.user)
         if not cards.exists():
@@ -34,5 +28,4 @@ class CardViewSet(ViewSet):
         serializer = CardSerializer(cards, many=True)
         card_data = serializer.data
 
-        cache.set(cache_key, card_data, timeout=60*60)
         return Response(card_data, status=status.HTTP_200_OK)

@@ -110,11 +110,13 @@ EMAIL_HOST_PASSWORD = 'yzwc mpdg yyij eyvv'
 
 
 GOOGLE_CLIENT_ID = '496875150134-ksj8ma3vtovt5394cuijruv837l4busk.apps.googleusercontent.com'
+GOOGLE_CLIENT_SECRET = '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'
+GOOGLE_REDIRECT_URI = 'http://localhost:8000/google-auth/callback/'
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'ALGORITHM': 'HS256',

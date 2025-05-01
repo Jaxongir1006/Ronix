@@ -93,7 +93,6 @@ class Product(TranslatableModel):
         else:
             return ''
         
-
 class Specification(TranslatableModel):
     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='specifications', verbose_name=_('Product'), null=True, blank=True)
     translations = TranslatedFields(
@@ -117,7 +116,6 @@ class Specification(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter('type', any_language=True) or 'Unnamed Specification'
-
 
 class ProductImages(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name=_('product'))

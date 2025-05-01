@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ViewSet,ModelViewSet
 from .serializers import ProductSerializer,CategorySerializer,SpecificationSerializer,ProductDetailSerializer,ProductImagesSerializer,SubCategorySerializer
-from .models import Product,Category,SubCategory,ProductDetail,ProductImages
+from .models import Product,Category,SubCategory
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
