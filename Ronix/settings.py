@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -109,10 +111,9 @@ EMAIL_HOST_USER = 'jahongir192006@gmail.com'
 EMAIL_HOST_PASSWORD = 'yzwc mpdg yyij eyvv'
 
 
-GOOGLE_CLIENT_ID = '496875150134-ksj8ma3vtovt5394cuijruv837l4busk.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET = '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'
-GOOGLE_REDIRECT_URI = 'http://localhost:8000/google-auth/callback/'
-
+GOOGLE_CLIENT_ID = config("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = config("GOOGLE_CLIENT_SECRET")
+GOOGLE_REDIRECT_URI = config("GOOGLE_REDIRECT_URI")
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=7),

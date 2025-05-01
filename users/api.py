@@ -6,7 +6,7 @@ router = DefaultRouter()
 
 router.register(r'register', RegisterLoginView, basename='register')
 router.register(r'verify-code', VerifyCodeView, basename='verify-code')
-router.register(r'google-auth', GoogleAuthViewSet, basename='google-auth')
+router.register(r'google-auth/callback', GoogleAuthViewSet, basename='google-auth')
 
 urlpatterns =[
     path('', include(router.urls)),
