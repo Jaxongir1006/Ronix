@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from django.core.cache import cache
-
+from .pagination import CustomPagination
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.language('en').all()
@@ -82,11 +82,16 @@ class ProductViewSet(ViewSet):
         if data:
             return Response(data, status=status.HTTP_200_OK)
         products = Product.objects.language('en').all()
-        serializer = ProductSerializer(products, many=True)
+
+        paginator = CustomPagination()
+        paginated_products = paginator.paginate_queryset(products, request)
+
+        serializer = ProductSerializer(paginated_products, many=True)
+        response = paginator.get_paginated_response(serializer.data)
 
         cache.set(cache_key, serializer.data, timeout=60*60)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return response
 
     @action(detail=False, methods=['get'], url_path='(?P<subcategory_name>[^/.]+)')
     def by_subcategory(self, request, subcategory_name=None):
@@ -96,11 +101,16 @@ class ProductViewSet(ViewSet):
             return Response(data, status=status.HTTP_200_OK)
         subcategory = get_object_or_404(SubCategory.objects.language('en'), translation__name=subcategory_name)
         products = Product.objects.language('en').filter(subcategory=subcategory)
-        serializer = ProductSerializer(products, many=True)
+
+        paginator = CustomPagination()
+        paginated_products = paginator.paginate_queryset(products, many=True)
+        
+        serializer = ProductSerializer(paginated_products, many=True)
+        response = paginator.get_paginated_response(serializer.data)
 
         cache.set(cache_key, serializer.data, timeout=60*60)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return response
 
     @action(detail=True, methods=['get'])
     def specifications(self, request, pk=None):

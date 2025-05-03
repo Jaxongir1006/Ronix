@@ -25,10 +25,7 @@ class Category(TranslatableModel):
 
     @property
     def imageURL(self):
-        if self.image:
-            return self.image.url
-        else:
-            return ''
+        return self.image.url if self.image else ''
 
 class SubCategory(TranslatableModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories', verbose_name=_('Category'))
