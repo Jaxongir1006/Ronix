@@ -4,11 +4,13 @@ from rest_framework import status
 from .serializers import CardSerializer
 from .models import Card
 from django.db import IntegrityError
+from rest_framework.permissions import IsAuthenticated
 
 class CardViewSet(ViewSet):
     """
     A viewset for managing credit card information.
     """
+    permission_classes = [IsAuthenticated]
     def create(self, request):
         serializer = CardSerializer(data=request.data)
         if serializer.is_valid():

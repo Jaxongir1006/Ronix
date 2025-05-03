@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'products',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
     'users',
     'locations',
     'pages',
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'home',
     'parler_rest',
     'card',
+    'stats',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +105,17 @@ TEMPLATES = [
     },
 ]
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': 'JWT format: Bearer <your_token>'
+        }
+    }
+}
+
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
@@ -136,6 +149,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
 }
 
 # Database

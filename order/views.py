@@ -3,8 +3,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderSerializer,OrderVerifySerializer,OrderListSerializer
 from .models import Order
+from rest_framework.permissions import IsAuthenticated
+
 
 class OrderViewSet(ViewSet):
+    permission_classes = [IsAuthenticated]
+
     def create(self, request):
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
