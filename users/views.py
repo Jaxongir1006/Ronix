@@ -1,11 +1,11 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializer import RegisterLoginSerializer, VerifyCodeSerializer,UserSerializer
+from .serializer import RegisterLoginSerializer, VerifyCodeSerializer,UserSerializer,UserProfileSerializer
 from .models import User
 from core.utils import generate_verification_code, send_email_code,send_sms
 import requests
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny,IsAuthenticated
 
 class RegisterLoginView(viewsets.ViewSet):
     def create(self, request):
@@ -111,4 +111,19 @@ class GoogleAuthViewSet(viewsets.ViewSet):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }, status=status.HTTP_200_OK)
-    
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def get_object(self):
+        return self.request.user
+
+    def list(self, request, *args, **kwargs):
+        return Response({'detail': 'Not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def create(self, request, *args, **kwargs):
+        return Response({'detail': 'Not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

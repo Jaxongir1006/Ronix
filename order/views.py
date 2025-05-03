@@ -7,7 +7,13 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class OrderViewSet(ViewSet):
-    permission_classes = [IsAuthenticated]
+    
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = []  # boshqa action'lar uchun permission yo'q
+        return [permission() for permission in permission_classes]
 
     def create(self, request):
         serializer = OrderSerializer(data=request.data)
