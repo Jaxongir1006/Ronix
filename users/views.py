@@ -6,6 +6,7 @@ from .models import User
 from core.utils import generate_verification_code, send_email_code,send_sms
 import requests
 from rest_framework.permissions import AllowAny,IsAuthenticated
+from rest_framework.decorators import action
 
 class RegisterLoginView(viewsets.ViewSet):
     def create(self, request):
@@ -112,18 +113,26 @@ class GoogleAuthViewSet(viewsets.ViewSet):
             'access': str(refresh.access_token),
         }, status=status.HTTP_200_OK)
 
+
 class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        return User.objects.filter(id=self.request.user.id)
+    @action(detail=False, methods=['get', 'put', 'patch', 'delete'], url_path='me')
+    def me(self, request):
+        user = request.user
 
-    def get_object(self):
-        return self.request.user
+        if request.method == 'GET':
+            serializer = self.get_serializer(user)
+            return Response(serializer.data)
 
-    def list(self, request, *args, **kwargs):
-        return Response({'detail': 'Not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        elif request.method in ['PUT', 'PATCH']:
+            serializer = self.get_serializer(user, data=request.data, partial=(request.method == 'PATCH'))
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def create(self, request, *args, **kwargs):
-        return Response({'detail': 'Not allowed.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        elif request.method == 'DELETE':
+            user.delete()
+            return Response({'detail': 'User profile deleted.'}, status=status.HTTP_204_NO_CONTENT)
