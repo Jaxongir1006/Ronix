@@ -1,44 +1,19 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializer import RegisterLoginSerializer, VerifyCodeSerializer,UserSerializer,UserProfileSerializer
+from .serializer import RegisterSerializer, VerifyCodeSerializer,UserSerializer,UserProfileSerializer,LoginSerializer,SendResetCodeSerializer,ConfirmResetPasswordSerializer
 from .models import User
-from core.utils import generate_verification_code, send_email_code,send_sms
 import requests
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.decorators import action
 
-class RegisterLoginView(viewsets.ViewSet):
+class RegisterView(viewsets.ViewSet):
     def create(self, request):
-        serializer = RegisterLoginSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        phone_number = serializer.validated_data.get('phone_number')
-        email = serializer.validated_data.get('email')
-
-        # Random 6   code
-        code = generate_verification_code()
-
-        if email:
-            user, created = User.objects.get_or_create(
-                email=email,
-                defaults={'username': email}
-            )
-            send_email_code(email, code)
-        elif phone_number:
-            user, created = User.objects.get_or_create(
-                phone_number=phone_number,
-                defaults={'username': phone_number}
-            )
-            send_sms(phone_number, code)
-        else:
-            return Response({"error": "Phone number or email is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-        user.verification_code = code
-        user.save()
-
-        return Response({"message": "Verification code sent."}, status=status.HTTP_200_OK)
-
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Royxatdan otish muvaffaqiyatli!'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyCodeView(viewsets.ViewSet):
     def create(self, request):
@@ -70,6 +45,36 @@ class VerifyCodeView(viewsets.ViewSet):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }, status=status.HTTP_200_OK)
+
+class LoginViewSet(viewsets.ViewSet):
+    def create(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data['user']
+
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'message': 'Successfully logged in!',
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_200_OK)
+        return Response({"error": "Couldn't log in"}, status=status.HTTP_400_BAD_REQUEST)
+
+class ResetPasswordViewSet(viewsets.ViewSet):
+    @action(detail=False, methods=['post'], url_path='send-code')
+    def send_code(self, request):
+        serializer = SendResetCodeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message': "Kod yuborildi!"})
+
+    @action(detail=False, methods=['post'], url_path='confirm')
+    def confirm_reset(self, request):
+        serializer = ConfirmResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'message': "Parol muvaffaqiyatli ozgartirildi!"})
+
 
 
 class GoogleAuthViewSet(viewsets.ViewSet):

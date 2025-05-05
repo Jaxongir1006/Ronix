@@ -22,6 +22,8 @@ class HomePageContentViewSet(ModelViewSet):
         data = serializer.data
         cache.set(cache_key, serializer.data, timeout=60*60)
 
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class CustomerReviewViewSet(ModelViewSet):
     queryset = CustomerReview.objects.all()
     serializer_class = customerReviewSerializer

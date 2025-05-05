@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 
 
 AUTHENTICATION_BACKENDS = [
-    'users.authentication.CodeAuthenticationBackend',
+    'users.authentication.PasswordOrCodeBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 

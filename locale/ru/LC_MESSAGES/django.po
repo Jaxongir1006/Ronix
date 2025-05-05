@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 21:25+0500\n"
+"POT-Creation-Date: 2025-05-04 16:21+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,196 +20,204 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\blog\models.py:7 .\blog\models.py:21 .\blog\models.py:45
-#: .\home\models.py:7 .\home\models.py:26 .\locations\models.py:24
-#: .\pages\models.py:22 .\products\models.py:135 .\series\models.py:24
-#: .\series\models.py:41
-msgid "Title"
-msgstr "Заголовок"
+#: .\card\models.py:5
+msgid "Card Number"
+msgstr "Номер карты"
 
-#: .\blog\models.py:10 .\blog\models.py:24 .\blog\models.py:56
-#: .\home\models.py:11 .\products\models.py:33 .\products\models.py:65
-#: .\products\models.py:90 .\products\models.py:111 .\series\models.py:12
-#: .\series\models.py:29
-msgid "Image"
-msgstr "Изображение"
+#: .\card\models.py:6
+msgid "Cardholder Name"
+msgstr "Имя владельца карты"
 
-#: .\blog\models.py:22
-#, fuzzy
-#| msgid "Description"
-msgid "Description "
-msgstr "Описание"
+#: .\card\models.py:7
+msgid "Expiration date"
+msgstr "Дата окончания срока"
 
-#: .\blog\models.py:25
-msgid "View"
-msgstr "Вид"
+#: .\card\models.py:9 .\users\models.py:22
+msgid "User"
+msgstr "Пользователь"
 
-#: .\blog\models.py:26 .\blog\models.py:67
-msgid "Created time"
-msgstr "Время создания"
+#: .\card\models.py:21
+msgid "Card number must be 16 digits."
+msgstr "Номер карты должен состоять из 16 цифр."
 
-#: .\blog\models.py:27
-msgid "Updated time"
-msgstr "Обновленное время"
+#: .\card\models.py:25
+msgid "CVV must be 3 or 4 digits."
+msgstr "CVV должен состоять из 3 или 4 цифр."
 
-#: .\blog\models.py:30 .\blog\models.py:68 .\blog\models.py:80
-msgid "Blog"
-msgstr "Блог"
-
-#: .\blog\models.py:31
-msgid "Blogs"
-msgstr "Блоги"
-
-#: .\blog\models.py:46 .\blog\models.py:54 .\home\models.py:27
-#: .\products\models.py:30 .\products\models.py:54 .\products\models.py:85
-#: .\products\models.py:136 .\series\models.py:9 .\series\models.py:25
-#: .\series\models.py:42
-msgid "Description"
-msgstr "Описание"
-
-#: .\blog\models.py:65
-msgid "Text"
-msgstr "Текст"
-
-#: .\blog\models.py:66 .\locations\models.py:7 .\products\models.py:29
-#: .\products\models.py:53 .\products\models.py:83 .\series\models.py:8
-#: .\series\models.py:23
-msgid "Name"
-msgstr "Имя"
-
-#: .\blog\models.py:71 .\review\models.py:8
-msgid "Comment"
-msgstr "Комментарий"
-
-#: .\blog\models.py:72
-msgid "Comments"
-msgstr "Комментарии"
-
-#: .\blog\models.py:79
-msgid "Rate"
-msgstr "Ставка"
-
-#: .\contact\models.py:5 .\distributors\models.py:6 .\pages\models.py:13
+#: .\contact\models.py:5
 msgid "Full name"
 msgstr "Полное имя"
 
-#: .\contact\models.py:6 .\distributors\models.py:7 .\users\models.py:8
+#: .\contact\models.py:6 .\users\models.py:8
 msgid "Phone number"
 msgstr "Номер телефона"
 
-#: .\contact\models.py:7 .\distributors\models.py:8 .\locations\models.py:28
-msgid "Country"
-msgstr "Страна"
-
-#: .\contact\models.py:8 .\distributors\models.py:9 .\users\models.py:7
+#: .\contact\models.py:7 .\users\models.py:7
 msgid "Email address"
 msgstr "Адрес электронной почты"
 
-#: .\contact\models.py:9 .\distributors\models.py:10
-msgid "Company"
-msgstr "Компания"
-
-#: .\contact\models.py:10
+#: .\contact\models.py:8
 msgid "Message"
 msgstr "Сообщение"
 
-#: .\contact\models.py:11 .\distributors\models.py:12
+#: .\contact\models.py:9
 #, fuzzy
 #| msgid "Created time"
 msgid "Created at"
 msgstr "Время создания"
 
-#: .\distributors\models.py:11
-#, fuzzy
-#| msgid "Specification"
-msgid "Occupation"
-msgstr "Спецификация"
+#: .\contact\models.py:15 .\contact\models.py:16
+msgid "Contact Us"
+msgstr "Связаться с нами"
 
-#: .\distributors\models.py:13
-msgid "Is active ?"
-msgstr "Активен ?"
+#: .\home\models.py:7 .\home\models.py:30 .\pages\models.py:18
+#: .\products\models.py:147
+msgid "Title"
+msgstr "Заголовок"
 
-#: .\home\models.py:8 .\pages\models.py:23
+#: .\home\models.py:8 .\pages\models.py:19
 #, fuzzy
 #| msgid "Title"
 msgid "Subtitle"
 msgstr "Заголовок"
 
-#: .\locations\models.py:9
-msgid "Flag"
-msgstr "Флаг"
+#: .\home\models.py:11 .\pages\models.py:21 .\products\models.py:15
+#: .\products\models.py:46 .\products\models.py:73 .\products\models.py:119
+msgid "Image"
+msgstr "Изображение"
 
-#: .\locations\models.py:10
-msgid "Languages"
-msgstr "Языки"
+#: .\home\models.py:25
+msgid "Home Banner"
+msgstr "Домашний баннер"
 
-#: .\locations\models.py:16
-msgid "Continent"
-msgstr "Континент"
+#: .\home\models.py:26
+msgid "Home Banners"
+msgstr "Домашние баннеры"
 
-#: .\locations\models.py:25
-#, fuzzy
-#| msgid "Description"
-msgid "Desciption"
+#: .\home\models.py:31 .\products\models.py:12 .\products\models.py:35
+#: .\products\models.py:68 .\products\models.py:148
+msgid "Description"
 msgstr "Описание"
 
-#: .\order\models.py:6
+#: .\home\models.py:34 .\products\models.py:120
+msgid "Video"
+msgstr "Видео"
+
+#: .\locations\models.py:8
+msgid "Branch name"
+msgstr "Название филиала"
+
+#: .\locations\models.py:10
+#, fuzzy
+#| msgid "Main image"
+msgid "Branch image"
+msgstr "Основное изображение"
+
+#: .\locations\models.py:11
+#, fuzzy
+#| msgid "Email address"
+msgid "Branch address"
+msgstr "Адрес электронной почты"
+
+#: .\locations\models.py:12
+#, fuzzy
+#| msgid "Phone number"
+msgid "Branch phone number"
+msgstr "Номер телефона"
+
+#: .\locations\models.py:13
+msgid "Branch email"
+msgstr "Электронная почта филиала"
+
+#: .\locations\models.py:24
+msgid "Branch"
+msgstr "Филиал"
+
+#: .\locations\models.py:25
+msgid "Branches"
+msgstr "Филиалы"
+
+#: .\order\models.py:7
 msgid "Packaging"
 msgstr "Упаковка"
 
-#: .\order\models.py:7
+#: .\order\models.py:8
 msgid "Shipped"
 msgstr "Отправленный"
 
-#: .\order\models.py:8
+#: .\order\models.py:9
 msgid "Canceled"
 msgstr "Отменено"
 
-#: .\order\models.py:9
+#: .\order\models.py:10
 msgid "Awaiting pickup"
 msgstr "Ожидание получения"
 
-#: .\order\models.py:10
+#: .\order\models.py:11
 msgid "Completed"
 msgstr "Завершенный"
 
-#: .\order\models.py:12
+#: .\order\models.py:13
 msgid "order_status"
 msgstr "статус_заказа"
 
-#: .\order\models.py:13 .\review\models.py:7 .\users\models.py:17
+#: .\order\models.py:14
 msgid "user"
 msgstr "пользователь"
 
-#: .\order\models.py:14
-msgid "promocode"
-msgstr "промо-код"
-
-#: .\order\models.py:17
+#: .\order\models.py:19 .\order\models.py:24
 msgid "Order"
 msgstr "Заказ"
 
-#: .\order\models.py:18
+#: .\order\models.py:20 .\order\models.py:25
 msgid "Orders"
 msgstr "Заказы"
 
-#: .\order\models.py:21
+#: .\order\models.py:28
 msgid "order"
 msgstr "заказ"
 
-#: .\order\models.py:22 .\products\models.py:110 .\review\models.py:6
+#: .\order\models.py:29 .\products\models.py:118
 #, fuzzy
 #| msgid "Product"
 msgid "product"
 msgstr "Продукт"
 
-#: .\order\models.py:23
+#: .\order\models.py:30
 msgid "quantity"
 msgstr "количество"
 
-#: .\order\models.py:24
+#: .\order\models.py:31
 msgid "discount"
 msgstr "discount"
+
+#: .\order\models.py:34
+#, fuzzy
+#| msgid "Order"
+msgid "Order Item"
+msgstr "Заказ"
+
+#: .\order\models.py:35
+#, fuzzy
+#| msgid "Orders"
+msgid "Order Items"
+msgstr "Заказы"
+
+#: .\order\serializers.py:35
+msgid "A verification code has been sent."
+msgstr "Проверочный код был отправлен."
+
+#: .\order\serializers.py:63 .\users\serializer.py:11 .\users\serializer.py:21
+msgid "Phone number or email is required."
+msgstr "Необходимо указать номер телефона или адрес электронной почты."
+
+#: .\order\serializers.py:87
+msgid "User with this email does not exist."
+msgstr "Пользователь с таким адресом электронной почты не существует."
+
+#: .\order\serializers.py:90
+msgid "Invalid verification code."
+msgstr "Неверный проверочный код."
 
 #: .\pages\models.py:6
 #, fuzzy
@@ -221,182 +229,256 @@ msgstr "Описание"
 msgid "Answer"
 msgstr "Ответ"
 
+#: .\pages\models.py:13
+msgid "FAQ"
+msgstr "Часто задаваемые вопросы"
+
 #: .\pages\models.py:14
-msgid "Email"
-msgstr "Электронная почта"
+msgid "FAQs"
+msgstr "Часто задаваемые вопросы"
 
-#: .\pages\models.py:15
-msgid "Subscribed at"
-msgstr "Подписан на"
+#: .\pages\models.py:34 .\pages\models.py:35
+msgid "About Us"
+msgstr "О нас"
 
-#: .\pages\models.py:25 .\products\models.py:132
-msgid "Main image"
-msgstr "Основное изображение"
+#: .\products\models.py:11 .\products\models.py:34 .\products\models.py:66
+msgid "Name"
+msgstr "Имя"
 
-#: .\products\models.py:8
-msgid "Type"
-msgstr "Тип"
-
-#: .\products\models.py:9
-msgid "Size"
-msgstr "Размер"
-
-#: .\products\models.py:10
-msgid "Power"
-msgstr "Власть"
-
-#: .\products\models.py:11
-msgid "Voltage"
-msgstr "Напряжение"
-
-#: .\products\models.py:12
-msgid "Frequency"
-msgstr "Частота"
-
-#: .\products\models.py:13
-msgid "Speed"
-msgstr "Скорость"
-
-#: .\products\models.py:14
-msgid "Capacity in wood"
-msgstr "Вместимость по дереву"
-
-#: .\products\models.py:15
-msgid "Capacity in steel"
-msgstr "Мощность в стали"
-
-#: .\products\models.py:16
-msgid "Weight"
-msgstr "Масса"
-
-#: .\products\models.py:17
-msgid "Supplied in"
-msgstr "Поставляется в"
-
-#: .\products\models.py:20 .\products\models.py:92
-msgid "Specification"
-msgstr "Спецификация"
-
-#: .\products\models.py:21
-#, fuzzy
-#| msgid "Specification"
-msgid "Specifications"
-msgstr "Спецификация"
-
-#: .\products\models.py:36 .\products\models.py:50 .\products\models.py:93
-#: .\series\models.py:45
+#: .\products\models.py:20 .\products\models.py:31 .\products\models.py:75
 msgid "Category"
 msgstr "Категория"
 
-#: .\products\models.py:37
+#: .\products\models.py:21
 msgid "Categories"
 msgstr "Категории"
 
-#: .\products\models.py:62
+#: .\products\models.py:43
 #, fuzzy
 #| msgid "Category"
 msgid "Parent SubCategory"
 msgstr "Родительская подкатегория"
 
-#: .\products\models.py:68
+#: .\products\models.py:51
 #, fuzzy
 #| msgid "Category"
 msgid "Subcategory"
 msgstr "Подкатегория"
 
-#: .\products\models.py:69
+#: .\products\models.py:52
 #, fuzzy
 #| msgid "Categories"
 msgid "Subcategories"
 msgstr "Подкатегории"
 
-#: .\products\models.py:84
+#: .\products\models.py:67
 msgid "Features"
 msgstr "Функции"
 
-#: .\products\models.py:86
+#: .\products\models.py:69
 msgid "Made in"
 msgstr "Сделано в"
 
-#: .\products\models.py:88
+#: .\products\models.py:71
 msgid "Barcode for Color Box"
 msgstr "Штрих-код для цветной коробки"
 
-#: .\products\models.py:89
+#: .\products\models.py:72
 msgid "Barcode for Inner Carton"
 msgstr "Штрих-код для внутренней коробки"
 
-#: .\products\models.py:91
+#: .\products\models.py:74
 msgid "Model"
 msgstr "Модель"
 
-#: .\products\models.py:96 .\products\models.py:139
+#: .\products\models.py:80 .\products\models.py:94 .\products\models.py:151
 msgid "Product"
 msgstr "Продукт"
 
-#: .\products\models.py:97
+#: .\products\models.py:81
 msgid "Products"
 msgstr "Продукция"
 
-#: .\products\models.py:112 .\series\models.py:30 .\series\models.py:47
-msgid "Video"
-msgstr "Видео"
+#: .\products\models.py:96
+msgid "Type"
+msgstr "Тип"
 
-#: .\products\models.py:115
+#: .\products\models.py:97
+msgid "Size"
+msgstr "Размер"
+
+#: .\products\models.py:98
+msgid "Power"
+msgstr "Власть"
+
+#: .\products\models.py:99
+msgid "Voltage"
+msgstr "Напряжение"
+
+#: .\products\models.py:100
+msgid "Frequency"
+msgstr "Частота"
+
+#: .\products\models.py:101
+msgid "Speed"
+msgstr "Скорость"
+
+#: .\products\models.py:102
+msgid "Capacity in wood"
+msgstr "Вместимость по дереву"
+
+#: .\products\models.py:103
+msgid "Capacity in steel"
+msgstr "Мощность в стали"
+
+#: .\products\models.py:104
+msgid "Weight"
+msgstr "Масса"
+
+#: .\products\models.py:105
+msgid "Supplied in"
+msgstr "Поставляется в"
+
+#: .\products\models.py:111
+msgid "Specification"
+msgstr "Спецификация"
+
+#: .\products\models.py:112
+#, fuzzy
+#| msgid "Specification"
+msgid "Specifications"
+msgstr "Спецификация"
+
+#: .\products\models.py:123 .\products\models.py:139
 #, fuzzy
 #| msgid "Product"
 msgid "Product Image"
 msgstr "Изображение продукта"
 
-#: .\products\models.py:116
+#: .\products\models.py:124 .\products\models.py:140
 #, fuzzy
 #| msgid "Products"
 msgid "Product Images"
 msgstr "Изображения продукта"
 
-#: .\products\models.py:124
+#: .\products\models.py:132
 msgid "At least one of image or video must be provided."
 msgstr "Необходимо предоставить хотя бы одно изображение или видео."
 
-#: .\review\models.py:19
-msgid "Power And Quality"
-msgstr "Мощность и качество"
+#: .\products\models.py:144
+msgid "Main image"
+msgstr "Основное изображение"
 
-#: .\review\models.py:20
-msgid "Easy To Use"
-msgstr "Легко использовать"
-
-#: .\review\models.py:21
-msgid "Safety"
-msgstr "Безопасность"
-
-#: .\review\models.py:22
-msgid "Ergonomy"
-msgstr "Эргономика"
-
-#: .\review\models.py:23
-msgid "Cost"
-msgstr "Расходы"
-
-#: .\series\models.py:28
+#: .\products\models.py:163
 #, fuzzy
-#| msgid "Categories"
-msgid "Series"
-msgstr "Категории"
+#| msgid "Product"
+msgid "Product Detail"
+msgstr "Изображение продукта"
 
-#: .\series\models.py:46
+#: .\products\models.py:164
 #, fuzzy
-#| msgid "Image"
-msgid "image"
-msgstr "Изображение"
+#| msgid "Products"
+msgid "Product Details"
+msgstr "Продукция"
 
-#: .\users\models.py:9
-msgid "Is distributor ?"
-msgstr "Является ли дистрибьютором?"
+#: .\users\models.py:11
+msgid "Username"
+msgstr "Имя пользователя"
 
-#: .\users\models.py:18
-msgid "promo_code"
-msgstr "промо-код"
+#: .\users\models.py:23
+msgid "Users"
+msgstr "Пользователи"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Description "
+#~ msgstr "Описание"
+
+#~ msgid "View"
+#~ msgstr "Вид"
+
+#~ msgid "Created time"
+#~ msgstr "Время создания"
+
+#~ msgid "Updated time"
+#~ msgstr "Обновленное время"
+
+#~ msgid "Blog"
+#~ msgstr "Блог"
+
+#~ msgid "Blogs"
+#~ msgstr "Блоги"
+
+#~ msgid "Text"
+#~ msgstr "Текст"
+
+#~ msgid "Comment"
+#~ msgstr "Комментарий"
+
+#~ msgid "Comments"
+#~ msgstr "Комментарии"
+
+#~ msgid "Rate"
+#~ msgstr "Ставка"
+
+#~ msgid "Country"
+#~ msgstr "Страна"
+
+#~ msgid "Company"
+#~ msgstr "Компания"
+
+#, fuzzy
+#~| msgid "Specification"
+#~ msgid "Occupation"
+#~ msgstr "Занятие"
+
+#~ msgid "Is active ?"
+#~ msgstr "Активен ?"
+
+#~ msgid "Flag"
+#~ msgstr "Флаг"
+
+#~ msgid "Languages"
+#~ msgstr "Языки"
+
+#~ msgid "Continent"
+#~ msgstr "Континент"
+
+#, fuzzy
+#~| msgid "Description"
+#~ msgid "Desciption"
+#~ msgstr "Описание"
+
+#~ msgid "Email"
+#~ msgstr "Электронная почта"
+
+#~ msgid "Subscribed at"
+#~ msgstr "Подписан на"
+
+#~ msgid "Power And Quality"
+#~ msgstr "Мощность и качество"
+
+#~ msgid "Easy To Use"
+#~ msgstr "Легко использовать"
+
+#~ msgid "Safety"
+#~ msgstr "Безопасность"
+
+#~ msgid "Ergonomy"
+#~ msgstr "Эргономика"
+
+#~ msgid "Cost"
+#~ msgstr "Расходы"
+
+#, fuzzy
+#~| msgid "Categories"
+#~ msgid "Series"
+#~ msgstr "Категории"
+
+#, fuzzy
+#~| msgid "Image"
+#~ msgid "image"
+#~ msgstr "Изображение"
 
 #~ msgid "rate"
 #~ msgstr "ставка"
