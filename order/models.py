@@ -12,7 +12,7 @@ class Order(models.Model):
 
     status=models.CharField(verbose_name = _("order_status"),max_length=30,choices=StatusEnum.choices)
     user=models.ForeignKey(verbose_name=_("user") ,to='users.User',on_delete=models.CASCADE)
-    
+    address = models.CharField(verbose_name=_('Address'), max_length=200, null=True, blank=True)
     objects = TranslatableManager()
 
     class Meta:

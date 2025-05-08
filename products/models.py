@@ -73,6 +73,7 @@ class Product(TranslatableModel):
     image = models.ImageField(upload_to='products/', verbose_name = _('Image'))
     model = models.CharField(max_length=100, verbose_name = _('Model'))
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='products', verbose_name = _('Category'))
+    price = models.FloatField(verbose_name=_('Price'), blank=True, null=True)
 
     objects = TranslatableManager()
 

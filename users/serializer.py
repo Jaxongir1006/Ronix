@@ -68,7 +68,7 @@ class LoginSerializer(serializers.Serializer):
 
         if not user:
             raise serializers.ValidationError("Foydalanuvchi topilmadi.")
-
+        
         if not user.check_password(password):
             raise serializers.ValidationError("Parol notogri.")
 
@@ -92,10 +92,10 @@ class SendResetCodeSerializer(serializers.Serializer):
         phone_number = validated_data.get('phone_number')
 
         user = None
-        if email:
-            user = User.objects.filter(email=email).first()
-        else:
+        if phone_number:
             user = User.objects.filter(phone_number=phone_number).first()
+        else:
+            user = User.objects.filter(email=email).first()
 
         if not user:
             raise serializers.ValidationError("Foydalanuvchi topilmadi.")
@@ -104,10 +104,10 @@ class SendResetCodeSerializer(serializers.Serializer):
         user.verification_code = code
         user.save()
 
-        if email:
-            send_email_code(email, code)
-        elif phone_number:
+        if phone_number:
             send_sms(phone_number, code)
+        elif email:
+            send_email_code(email, code)
 
         return user
 
@@ -159,4 +159,4 @@ class UserSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'phone_number', 'username']
+        fields = ['id', 'email', 'phone_number', 'username', 'address']

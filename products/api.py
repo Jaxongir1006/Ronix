@@ -4,7 +4,7 @@ from django.urls import path,include
 
 router = DefaultRouter()
 
-router.register(r'products', ProductViewSet, basename='products')
+router.register(r'product', ProductViewSet, basename='products')
 router.register(r'categories', CategoryViewSet, basename='categories')
 router.register(r'subcategories', SubCategoryViewSet, basename='subcategories')
 

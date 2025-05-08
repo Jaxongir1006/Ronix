@@ -5,7 +5,7 @@ class Card(models.Model):
     card_number = models.CharField(max_length=16, unique=True, verbose_name=_("Card Number"))
     cardholder_name = models.CharField(max_length=100, verbose_name=_("Cardholder Name"))
     expiration_date = models.DateField(verbose_name=_("Expiration date"))
-    cvv = models.CharField(max_length=4, verbose_name="CVV")
+    cvv = models.CharField(max_length=4, verbose_name="CVV", blank=True, null=True)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='cards', verbose_name=_("User"))
 
     class Meta:

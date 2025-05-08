@@ -6,6 +6,8 @@ from .models import User
 import requests
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.decorators import action
+from cart.models import Cart
+
 
 class RegisterView(viewsets.ViewSet):
     def create(self, request):
@@ -23,7 +25,8 @@ class VerifyCodeView(viewsets.ViewSet):
         phone_number = serializer.validated_data.get('phone_number')
         email = serializer.validated_data.get('email')
         code = serializer.validated_data.get('code')
-
+        session_id = request.data.get("session_id")
+        
         try:
             if phone_number:
                 user = User.objects.get(phone_number=phone_number)
@@ -38,6 +41,16 @@ class VerifyCodeView(viewsets.ViewSet):
         user.is_verified = True
         user.verification_code = None
         user.save()
+
+        if session_id:
+            try:
+                cart = Cart.objects.get(session_id=session_id, user__isnull=True)
+                cart.user = user
+                cart.session_id = None  # optional: uni tozalab qo'yish ham mumkin
+                cart.save()
+            except Cart.DoesNotExist:
+                pass
+
 
         refresh = RefreshToken.for_user(user)
 

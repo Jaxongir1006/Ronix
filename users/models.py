@@ -9,6 +9,7 @@ class User(AbstractUser):
     verification_code = models.CharField(max_length=6, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     username = models.CharField(max_length=150, blank=True, null=True, unique=False, verbose_name=_('Username'))
+    address = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Address'))
 
     USERNAME_FIELD = 'email'  # Auth email orqali bo'ladi
     REQUIRED_FIELDS = []  # Username va password kiritish shart emas
@@ -16,7 +17,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        return self.username or self.phone_number
+        return self.email or self.phone_number
     
     class Meta:
         verbose_name = _("User")
