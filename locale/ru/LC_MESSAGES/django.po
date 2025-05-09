@@ -267,7 +267,7 @@ msgstr "Подкатегория"
 
 #: .\products\models.py:52
 #, fuzzy
-#| msgid "Categories"
+#| msgid "Subcategories"
 msgid "Subcategories"
 msgstr "Подкатегории"
 
@@ -346,7 +346,7 @@ msgstr "Спецификация"
 #: .\products\models.py:112
 #, fuzzy
 #| msgid "Specification"
-msgid "Specifications"
+msgid "Specification"
 msgstr "Спецификация"
 
 #: .\products\models.py:123 .\products\models.py:139

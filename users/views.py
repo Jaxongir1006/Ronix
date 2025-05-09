@@ -154,3 +154,4 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         elif request.method == 'DELETE':
             user.delete()
             return Response({'detail': 'User profile deleted.'}, status=status.HTTP_204_NO_CONTENT)
+
