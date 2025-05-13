@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'core',
     'home',
     'parler_rest',
-    'card',
     'stats',
     'cart',
 ]

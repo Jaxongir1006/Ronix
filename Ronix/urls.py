@@ -43,7 +43,6 @@ urlpatterns = [
     path('', include('users.api')),
     path('', include('order.api')),
     path('', include('pages.api')),
-    path('', include('card.api')),
     path('', include('stats.api')),
     path('', include('cart.api')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),

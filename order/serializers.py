@@ -68,7 +68,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             OrderItem(order=order, **item_data) for item_data in items_data
         ]
         OrderItem.objects.bulk_create(order_items)
-
+        
         return order
 
 

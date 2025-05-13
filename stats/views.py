@@ -6,7 +6,7 @@ from rest_framework.response import Response
 class UserStatsAPIView(ViewSet):
     permission_classes = [IsAdminUser]  # faqat admin foydalanuvchi uchun
 
-    def get(self, request):
+    def list(self, request):
         user_count = User.objects.count()
         return Response({
             "total_users": user_count,
