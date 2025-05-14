@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'parler_rest',
     'stats',
     'cart',
+    'payment',
 ]
 
 MIDDLEWARE = [

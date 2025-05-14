@@ -9,6 +9,7 @@ from django.db import transaction
 from users.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 
+
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderReadSerializer
@@ -63,16 +64,6 @@ class OrderViewSet(ModelViewSet):
         if self.action == 'create':
             return OrderCreateSerializer
         return OrderReadSerializer
-
-    # @action(detail=True, methods=['post'])
-    # def verify(self, request, pk=None):
-    #     order = self.get_object()
-    #     if order.status != 'pending':
-    #         return Response({'detail': 'Only pending orders can be verified'}, status=status.HTTP_400_BAD_REQUEST)
-
-    #     order.status = 'verified'
-    #     order.save()
-    #     return Response({'detail': 'Order verified'}, status=status.HTTP_200_OK)
 
 class VerificationViewSet(ViewSet):
     
