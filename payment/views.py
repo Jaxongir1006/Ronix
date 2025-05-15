@@ -5,11 +5,18 @@ from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework import status
 from order.models import Order
 from urllib.parse import urlencode
+import hashlib
 
 # sozlamalar
 PAYME_MERCHANT_ID = 'YOUR_MERCHANT_ID'
 PAYME_URL = 'https://checkout.paycom.uz'
 CALLBACK_URL = 'https://ronixtools.uz/payment/payme/callback/'
+PAYME_SECRET_KEY = 'YOUR_SECRET_KEY'
+
+
+def generate_signature(params, secret_key):
+    sign_string = ':'.join(str(params[k]) for k in sorted(params))
+    return hashlib.md5((sign_string + secret_key).encode()).hexdigest()
 
 
 class PaymeViewSet(ViewSet):
@@ -43,6 +50,36 @@ class PaymeViewSet(ViewSet):
 
         except Order.DoesNotExist:
             return Response({'detail': 'Order not found'}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['post'], url_path='callback', permission_classes=[AllowAny])
+    def payme_callback(self, request):
+        data = request.data
+
+        external_id = data.get('account', {}).get('order_id')
+        amount = int(data.get('amount'))
+        received_signature = data.get('sign')
+
+        if not (external_id and received_signature):
+            return Response({'error': 'Invalid data'}, status=400)
+
+        try:
+            order = Order.objects.get(external_id=external_id)
+
+            expected_signature = generate_signature({
+                'amount': str(amount),
+                'order_id': external_id,
+            }, PAYME_SECRET_KEY)
+
+            if expected_signature != received_signature:
+                return Response({'error': 'Invalid signature'}, status=403)
+
+            order.status = 'paid'
+            order.save()
+
+            return Response({'success': True})
+
+        except Order.DoesNotExist:
+            return Response({'error': 'Order not found'}, status=404)
 
 
 
