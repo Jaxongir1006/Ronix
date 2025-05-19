@@ -1,140 +1,34 @@
 from rest_framework.viewsets import ViewSet
-from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated,AllowAny
-from rest_framework import status
-from order.models import Order
-from urllib.parse import urlencode
-import hashlib
+from rest_framework.permissions import AllowAny
+from django.utils.translation import gettext_lazy as _
+from rest_framework.decorators import action
+from decimal import Decimal
+from .methods.generate_click_link import GenerateClickLink
 
-# sozlamalar
-PAYME_MERCHANT_ID = 'YOUR_MERCHANT_ID'
-PAYME_URL = 'https://checkout.paycom.uz'
-CALLBACK_URL = 'https://ronixtools.uz/payment/payme/callback/'
-PAYME_SECRET_KEY = 'YOUR_SECRET_KEY'
+class PaymeCallbackAPIView(ViewSet):
+    permission_classes = [AllowAny]
 
-
-def generate_signature(params, secret_key):
-    sign_string = ':'.join(str(params[k]) for k in sorted(params))
-    return hashlib.md5((sign_string + secret_key).encode()).hexdigest()
+    def list(self, request):
+        # Bu yerda istasangiz frontendga qaytarishingiz mumkin yoki API response berishingiz mumkin
+        return Response({"message": "To'lov muvaffaqiyatli yakunlandi"})
 
 
-class PaymeViewSet(ViewSet):
-    permission_classes = [IsAuthenticated]
+class ClickPaymentViewSet(ViewSet):
+    permission_classes = [AllowAny]
 
-    @action(detail=False, methods=['post'], url_path='initiate')
-    def payme_initiate(self, request):
-        order_id = request.data.get('order_id')
+    @action(detail=False, methods=['post'], url_path='generate-link')
+    def generate_link(self, request):
+        order_id = request.data.get("order_id")
+        amount = request.data.get("amount")
 
-        try:
-            order = Order.objects.get(id=order_id, user=request.user)
-
-            if order.status == 'paid':
-                return Response({'detail': 'Order already paid'}, status=status.HTTP_400_BAD_REQUEST)
-
-            amount_in_tiyin = int(order.amount * 100)
-
-            payment_data = {
-                "merchant": PAYME_MERCHANT_ID,
-                "amount": amount_in_tiyin,
-                "account": {
-                    "order_id": order.external_id
-                },
-                "callback": CALLBACK_URL
-            }
-
-            return Response({
-                "payme_url": PAYME_URL,
-                "payment_data": payment_data
-            })
-
-        except Order.DoesNotExist:
-            return Response({'detail': 'Order not found'}, status=status.HTTP_400_BAD_REQUEST)
-
-    @action(detail=False, methods=['post'], url_path='callback', permission_classes=[AllowAny])
-    def payme_callback(self, request):
-        data = request.data
-
-        external_id = data.get('account', {}).get('order_id')
-        amount = int(data.get('amount'))
-        received_signature = data.get('sign')
-
-        if not (external_id and received_signature):
-            return Response({'error': 'Invalid data'}, status=400)
+        if not order_id or not amount:
+            return Response({"error": "order_id va amount talab qilinadi"}, status=400)
 
         try:
-            order = Order.objects.get(external_id=external_id)
+            amount = Decimal(amount)
+        except:
+            return Response({"error": "amount notogri formatda"}, status=400)
 
-            expected_signature = generate_signature({
-                'amount': str(amount),
-                'order_id': external_id,
-            }, PAYME_SECRET_KEY)
-
-            if expected_signature != received_signature:
-                return Response({'error': 'Invalid signature'}, status=403)
-
-            order.status = 'paid'
-            order.save()
-
-            return Response({'success': True})
-
-        except Order.DoesNotExist:
-            return Response({'error': 'Order not found'}, status=404)
-
-
-
-CLICK_MERCHANT_ID = 'YOUR_CLICK_MERCHANT_ID'
-CLICK_SERVICE_ID = 'YOUR_CLICK_SERVICE_ID'
-CLICK_SECRET_KEY = 'YOUR_CLICK_SECRET_KEY'
-CLICK_PAYMENT_URL = 'https://my.click.uz/services/pay'
-
-class ClickViewSet(ViewSet):
-
-    @action(detail=False, methods=['post'], url_path='initiate', permission_classes = [IsAuthenticated])
-    def click_initiate(self, request):
-        order_id = request.data.get('order_id')
-
-        try:
-            order = Order.objects.get(id=order_id, user=request.user)
-            if order.status == 'paid':
-                return Response({'detail': 'Order already paid'}, status=status.HTTP_400_BAD_REQUEST)
-
-            amount = float(order.amount)
-
-            params = {
-                'service_id': CLICK_SERVICE_ID,
-                'merchant_id': CLICK_MERCHANT_ID,
-                'amount': amount,
-                'transaction_param': order.external_id,
-                'return_url': 'https://ronixtools.uz/payment-success/',
-                'cancel_url': 'https://ronixtools.uz/payment-cancel/',
-            }
-
-            click_url = f"{CLICK_PAYMENT_URL}?{urlencode(params)}"
-            return Response({'click_url': click_url})
-
-        except Order.DoesNotExist:
-            return Response({'detail': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
-
-    @action(detail=False, methods=['post'], url_path='callback', permission_classes=[AllowAny])
-    def click_callback(self, request):
-        data = request.data
-
-        external_id = data.get('merchant_trans_id')
-        sign_string = f"{external_id}{data.get('amount')}{CLICK_SECRET_KEY}"
-        received_sign = data.get('sign_time')
-
-        try:
-            order = Order.objects.get(external_id=external_id)
-
-            # Imzo tekshirish shart, Click hujjatiga qarab sozlashing mumkin
-            if received_sign != sign_string:  # Bu faqat misol!
-                return Response({'error': 'Invalid signature'}, status=status.HTTP_403_FORBIDDEN)
-
-            order.status = 'paid'
-            order.save()
-
-            return Response({'success': True})
-
-        except Order.DoesNotExist:
-            return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+        payment_link = GenerateClickLink(order_id=order_id, amount=amount).generate_link()
+        return Response({"payment_link": payment_link})

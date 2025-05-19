@@ -6,7 +6,7 @@ class Order(models.Model):
         PENDING = 'pending', _('Pending')                # Buyurtma yaratilgan, hali ko‘rilmagan
         PAID = 'paid', _('Paid')                         # Tolov qilingan
         CANCELED = 'canceled', _('Canceled')             # Buyurtma bekor qilingan
-
+        AWAITING_PAYMENT = 'awaiting payment', _('Awaiting Payment') # tolov qilinishi kutilmoqda
 
     status=models.CharField(verbose_name = _("order_status"),max_length=30,choices=StatusEnum.choices, default=StatusEnum.PENDING)
     user=models.ForeignKey(verbose_name=_("user") ,to='users.User',on_delete=models.CASCADE)

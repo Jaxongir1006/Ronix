@@ -68,6 +68,21 @@ INSTALLED_APPS = [
     'payment',
 ]
 
+
+PAYME = {
+    "PAYME_ID": config("PAYME_ID"),
+    "PAYME_ACCOUNT": config("PAYME_ACCOUNT"),
+    "PAYME_CALL_BACK_URL": config("PAYME_CALL_BACK_URL"),
+    "PAYME_URL": config("PAYME_URL"),
+}
+
+CLICK_MERCHANT_ID = config("CLICK_MERCHANT_ID")
+CLICK_SERVICE_ID = config("CLICK_SERVICE_ID")
+CLICK_SECRET_KEY = config("CLICK_SECRET_KEY")
+CLICK_RETURN_URL = config("CLICK_RETURN_URL")
+CLICK_PAYMENT_URL = config("CLICK_PAYMENT_URL", "https://my.click.uz/services/pay")
+
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
