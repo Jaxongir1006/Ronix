@@ -26,8 +26,9 @@ class Payment(models.Model):
         verbose_name="Tranzaksiya holati (Payme)"
     )
     transaction_id = models.CharField(max_length=255, null=True, blank=False, verbose_name="Tranzaksiya ID")
+    order = models.ForeignKey(to='order.Order', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Buyurtma")
     user = models.ForeignKey(to='users.User',on_delete=models.CASCADE,blank=True, null=True)
-    amount = models.FloatField(null=True, blank=True, verbose_name="Miqdor")
+    amount = models.DecimalField(null=True, blank=True, verbose_name="Miqdor")
     time = models.BigIntegerField(null=True, blank=True, verbose_name="Vaqt")
     perform_time = models.BigIntegerField(null=True, default=0, verbose_name="Bajarilgan vaqti")
     cancel_time = models.BigIntegerField(null=True, default=0, verbose_name="Bekor qilingan vaqti")
@@ -45,11 +46,3 @@ class Payment(models.Model):
 
     def __str__(self):
         return str(self._id)
-
-class PeymentVerification(models.Model):
-    client = models.ForeignKey(to='users.User',on_delete=models.CASCADE)
-    token = models.CharField(max_length=500)
-    time = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.time}"

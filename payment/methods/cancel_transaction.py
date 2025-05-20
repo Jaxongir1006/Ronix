@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
 
 class CancelTransaction:
-    def post(self, params: dict):
+    def __call__(self, params: dict):
         data = params.get('params', {})
         transaction_id = data.get('id')
         reason = data.get('reason')

@@ -14,12 +14,12 @@ class GenerateClickLink:
         Generate a Click payment link.
         """
         params = {
-            "service_id": settings.CLICK_SERVICE_ID,
-            "merchant_id": settings.CLICK_MERCHANT_ID,
+            "service_id": settings.CLICK['SERVICE_ID'],
+            "merchant_id": settings.CLICK['MERCHANT_ID'],
             "transaction_param": self.order_id,
             "amount": str(self.amount),  # e.g. '10000'
-            "return_url": settings.CLICK_RETURN_URL,
+            "return_url": settings.CLICK['RETURN_URL'],
         }
 
         query_string = urllib.parse.urlencode(params)
-        return f"{settings.CLICK_PAYMENT_URL}?{query_string}"
+        return f"{settings.CLICK['PAYMENT_URL']}?{query_string}"

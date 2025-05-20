@@ -76,12 +76,14 @@ PAYME = {
     "PAYME_URL": config("PAYME_URL"),
 }
 
-CLICK_MERCHANT_ID = config("CLICK_MERCHANT_ID")
-CLICK_SERVICE_ID = config("CLICK_SERVICE_ID")
-CLICK_SECRET_KEY = config("CLICK_SECRET_KEY")
-CLICK_RETURN_URL = config("CLICK_RETURN_URL")
-CLICK_PAYMENT_URL = config("CLICK_PAYMENT_URL", "https://my.click.uz/services/pay")
-
+CLICK = {
+    "MERCHANT_ID": config("CLICK_MERCHANT_ID",cast=int),
+    'MERCHANT_USER_ID': config("CLICK_MERCHANT_USER_ID", cast=int),
+    "SERVICE_ID": config("CLICK_SERVICE_ID"),
+    "SECRET_KEY": config("CLICK_SECRET_KEY"),
+    "RETURN_URL": config("CLICK_RETURN_URL"),
+    "PAYMENT_URL": config("CLICK_PAYMENT_URL")
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
