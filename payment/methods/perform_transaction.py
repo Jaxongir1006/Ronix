@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from models import Payment
+from payment.models import Payment
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now
 

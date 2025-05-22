@@ -77,8 +77,8 @@ PAYME = {
 }
 
 CLICK = {
-    "MERCHANT_ID": config("CLICK_MERCHANT_ID",cast=int),
-    'MERCHANT_USER_ID': config("CLICK_MERCHANT_USER_ID", cast=int),
+    "MERCHANT_ID": config("CLICK_MERCHANT_ID",),
+    'MERCHANT_USER_ID': config("CLICK_MERCHANT_USER_ID",),
     "SERVICE_ID": config("CLICK_SERVICE_ID"),
     "SECRET_KEY": config("CLICK_SECRET_KEY"),
     "RETURN_URL": config("CLICK_RETURN_URL"),

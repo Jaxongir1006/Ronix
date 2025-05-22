@@ -28,7 +28,7 @@ class Payment(models.Model):
     transaction_id = models.CharField(max_length=255, null=True, blank=False, verbose_name="Tranzaksiya ID")
     order = models.ForeignKey(to='order.Order', on_delete=models.CASCADE, blank=True, null=True, verbose_name="Buyurtma")
     user = models.ForeignKey(to='users.User',on_delete=models.CASCADE,blank=True, null=True)
-    amount = models.DecimalField(null=True, blank=True, verbose_name="Miqdor")
+    amount = models.FloatField(null=True, blank=True, verbose_name="Miqdor")
     time = models.BigIntegerField(null=True, blank=True, verbose_name="Vaqt")
     perform_time = models.BigIntegerField(null=True, default=0, verbose_name="Bajarilgan vaqti")
     cancel_time = models.BigIntegerField(null=True, default=0, verbose_name="Bekor qilingan vaqti")

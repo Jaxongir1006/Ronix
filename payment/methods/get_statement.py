@@ -1,4 +1,4 @@
-from models import Payment
+from payment.models import Payment
 
 class GetStatement:
     def __call__(self, params: dict) -> dict:
