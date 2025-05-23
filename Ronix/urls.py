@@ -34,8 +34,8 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')),
-    path('', include('products.api')),
+    path('i18n/', include('django.conf.urls.i18n')),    
+    path('', include('products.api')),  
     path('', include('home.api')),
     path('', include('locations.api')),
     path('', include('contact.api')),
