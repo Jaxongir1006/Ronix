@@ -8,8 +8,8 @@ from parler.managers import TranslatableManager
 class Category(TranslatableModel):
 
     translations = TranslatedFields(
-        name = models.CharField(max_length=200, verbose_name = _('Name'),blank=True,null=True),
-        description = models.TextField(verbose_name = _('Description'),blank=True,null=True)
+        name = models.CharField(max_length=200, verbose_name = _('Name')),
+        description = models.TextField(verbose_name = _('Description'))
     )
 
     image = models.ImageField(upload_to='category/', verbose_name = _('Image'))
@@ -73,7 +73,7 @@ class Product(TranslatableModel):
     image = models.ImageField(upload_to='products/', verbose_name = _('Image'))
     model = models.CharField(max_length=100, verbose_name = _('Model'))
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='products', verbose_name = _('Category'))
-    price = models.FloatField(verbose_name=_('Price'), blank=True, null=True)
+    price = models.FloatField(verbose_name=_('Price'))
 
     objects = TranslatableManager()
 
@@ -92,7 +92,7 @@ class Product(TranslatableModel):
             return ''
         
 class Specification(TranslatableModel):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='specifications', verbose_name=_('Product'), null=True, blank=True)
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='specifications', verbose_name=_('Product'))
     translations = TranslatedFields(
         type = models.CharField(max_length=100, verbose_name = _('Type')),
         size = models.CharField(max_length=100, verbose_name = _('Size')),
@@ -149,7 +149,7 @@ class ProductDetail(TranslatableModel):
         description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
     )
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'), related_name='details', blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name=_('Product'), related_name='details')
 
     objects = TranslatableManager()
 

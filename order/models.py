@@ -10,9 +10,8 @@ class Order(models.Model):
 
     status=models.CharField(verbose_name = _("order_status"),max_length=30,choices=StatusEnum.choices, default=StatusEnum.PENDING)
     user=models.ForeignKey(verbose_name=_("user") ,to='users.User',on_delete=models.CASCADE)
-    total_price = models.FloatField(verbose_name=_('Total price'), blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    external_id = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    total_price = models.FloatField(verbose_name=_('Total price'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created at'))
 
     objects = TranslatableManager()
 

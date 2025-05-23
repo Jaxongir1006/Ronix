@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-04 16:21+0500\n"
+"POT-Creation-Date: 2025-05-22 18:01+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,30 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\cart\models.py:6
+msgid "Cart_user"
+msgstr "Cart_user"
 
-#: .\card\models.py:5
-msgid "Card Number"
-msgstr "Card Number"
+#: .\cart\models.py:16 .\cart\models.py:20
+msgid "Cart"
+msgstr "Cart"
 
-#: .\card\models.py:6
-msgid "Cardholder Name"
-msgstr "Cardholder Name"
+#: .\cart\models.py:17
+msgid "Carts"
+msgstr "Carts"
 
-#: .\card\models.py:7
-msgid "Expiration date"
-msgstr "Expiration date"
+#: .\cart\models.py:21 .\products\models.py:81 .\products\models.py:95
+#: .\products\models.py:152
+msgid "Product"
+msgstr "Product"
 
-#: .\card\models.py:9 .\users\models.py:22
-msgid "User"
-msgstr "User"
+#: .\cart\models.py:22
+msgid "Quantity"
+msgstr "Quantity"
 
-#: .\card\models.py:21
-msgid "Card number must be 16 digits."
-msgstr "Card number must be 16 digits."
+#: .\cart\models.py:26
+msgid "Cart Item"
+msgstr "Cart Item"
 
-#: .\card\models.py:25
-msgid "CVV must be 3 or 4 digits."
-msgstr "CVV must be 3 or 4 digits."
+#: .\cart\models.py:27
+msgid "Cart Items"
+msgstr "Cart Items"
 
 #: .\contact\models.py:5
 msgid "Full name"
@@ -59,28 +63,24 @@ msgid "Message"
 msgstr "Message"
 
 #: .\contact\models.py:9
-#, fuzzy
-#| msgid "Created time"
 msgid "Created at"
-msgstr "Created time"
+msgstr "Created at"
 
 #: .\contact\models.py:15 .\contact\models.py:16
 msgid "Contact Us"
 msgstr "Contact Us"
 
 #: .\home\models.py:7 .\home\models.py:30 .\pages\models.py:18
-#: .\products\models.py:147
+#: .\products\models.py:148
 msgid "Title"
 msgstr "Title"
 
 #: .\home\models.py:8 .\pages\models.py:19
-#, fuzzy
-#| msgid "Title"
 msgid "Subtitle"
 msgstr "Subtitle"
 
 #: .\home\models.py:11 .\pages\models.py:21 .\products\models.py:15
-#: .\products\models.py:46 .\products\models.py:73 .\products\models.py:119
+#: .\products\models.py:46 .\products\models.py:73 .\products\models.py:120
 msgid "Image"
 msgstr "Image"
 
@@ -93,11 +93,11 @@ msgid "Home Banners"
 msgstr "Home Banners"
 
 #: .\home\models.py:31 .\products\models.py:12 .\products\models.py:35
-#: .\products\models.py:68 .\products\models.py:148
+#: .\products\models.py:68 .\products\models.py:149
 msgid "Description"
 msgstr "Description"
 
-#: .\home\models.py:34 .\products\models.py:120
+#: .\home\models.py:34 .\products\models.py:121
 msgid "Video"
 msgstr "Video"
 
@@ -106,22 +106,16 @@ msgid "Branch name"
 msgstr "Branch name"
 
 #: .\locations\models.py:10
-#, fuzzy
-#| msgid "Main image"
 msgid "Branch image"
-msgstr "Main image"
+msgstr "Branch image"
 
 #: .\locations\models.py:11
-#, fuzzy
-#| msgid "Email address"
 msgid "Branch address"
-msgstr "Email address"
+msgstr "Branch address"
 
 #: .\locations\models.py:12
-#, fuzzy
-#| msgid "Phone number"
 msgid "Branch phone number"
-msgstr "Phone number"
+msgstr "Branch phone number"
 
 #: .\locations\models.py:13
 msgid "Branch email"
@@ -135,91 +129,75 @@ msgstr "Branch"
 msgid "Branches"
 msgstr "Branches"
 
+#: .\order\models.py:6
+msgid "Pending"
+msgstr "Pending"
+
 #: .\order\models.py:7
-msgid "Packaging"
-msgstr "Packaging"
+msgid "Paid"
+msgstr "Paid"
 
 #: .\order\models.py:8
-msgid "Shipped"
-msgstr "Shipped"
-
-#: .\order\models.py:9
 msgid "Canceled"
 msgstr "Canceled"
 
-#: .\order\models.py:10
-msgid "Awaiting pickup"
-msgstr "Awaiting pickup"
+#: .\order\models.py:9
+msgid "Awaiting Payment"
+msgstr "Awaiting Payment"
 
 #: .\order\models.py:11
-msgid "Completed"
-msgstr "Completed"
-
-#: .\order\models.py:13
 msgid "order_status"
-msgstr "order_status"
+msgstr "order status"
 
-#: .\order\models.py:14
+#: .\order\models.py:12
 msgid "user"
 msgstr "user"
 
-#: .\order\models.py:19 .\order\models.py:24
+#: .\order\models.py:13
+msgid "Total price"
+msgstr "Total price"
+
+#: .\order\models.py:20 .\order\models.py:25
 msgid "Order"
 msgstr "Order"
 
-#: .\order\models.py:20 .\order\models.py:25
+#: .\order\models.py:21 .\order\models.py:26
 msgid "Orders"
 msgstr "Orders"
 
-#: .\order\models.py:28
+#: .\order\models.py:32
 msgid "order"
 msgstr "order"
 
-#: .\order\models.py:29 .\products\models.py:118
-#, fuzzy
-#| msgid "Product"
+#: .\order\models.py:33 .\products\models.py:119
 msgid "product"
-msgstr "Product"
+msgstr "product"
 
-#: .\order\models.py:30
+#: .\order\models.py:34
 msgid "quantity"
 msgstr "quantity"
 
-#: .\order\models.py:31
-msgid "discount"
-msgstr "discount"
+#: .\order\models.py:35 .\products\models.py:76
+msgid "Price"
+msgstr "Price"
 
-#: .\order\models.py:34
-#, fuzzy
-#| msgid "Order"
+#: .\order\models.py:38
 msgid "Order Item"
-msgstr "Order"
+msgstr "Order Item"
 
-#: .\order\models.py:35
-#, fuzzy
-#| msgid "Orders"
+#: .\order\models.py:39
 msgid "Order Items"
-msgstr "Orders"
+msgstr "Order Items"
 
-#: .\order\serializers.py:35
-msgid "A verification code has been sent."
-msgstr "A verification code has been sent."
-
-#: .\order\serializers.py:63 .\users\serializer.py:11 .\users\serializer.py:21
+#: .\order\serializers.py:25 .\users\serializer.py:53
 msgid "Phone number or email is required."
 msgstr "Phone number or email is required."
 
-#: .\order\serializers.py:87
-msgid "User with this email does not exist."
-msgstr "User with this email does not exist."
-
-#: .\order\serializers.py:90
-msgid "Invalid verification code."
-msgstr "Invalid verification code."
+#: .\order\serializers.py:38
+msgid "Verification code sent. Please verify your account before ordering."
+msgstr "Verification code sent. Please verify your account before ordering."
 
 #: .\pages\models.py:6
-#, fuzzy
-#| msgid "Description"
 msgid "Question"
 msgstr "Question"
 
@@ -239,6 +217,60 @@ msgstr "FAQs"
 msgid "About Us"
 msgstr "About Us"
 
+#: .\payment\methods\cancel_transaction.py:19
+#: .\payment\methods\check_transaction.py:32
+#: .\payment\methods\perform_transaction.py:18
+msgid "Tranzaksiya topilmadi."
+msgstr "Transaction not found"
+
+#: .\payment\methods\cancel_transaction.py:20
+#: .\payment\methods\check_transaction.py:33
+#: .\payment\methods\perform_transaction.py:19
+msgid "Транзакция не найдена."
+msgstr "Transaction not found"
+
+#: .\payment\methods\cancel_transaction.py:21
+#: .\payment\methods\check_transaction.py:34
+#: .\payment\methods\perform_transaction.py:20
+msgid "Transaction not found."
+msgstr "Transaction not found"
+
+#: .\payment\methods\create_transaction.py:52
+msgid "Tranzaksiya muddati tugagan."
+msgstr "Transaction timeout"
+
+#: .\payment\methods\create_transaction.py:53
+msgid "Время транзакции истекло."
+msgstr "Transaction timeout"
+
+#: .\payment\methods\create_transaction.py:54
+msgid "Transaction timeout."
+msgstr "Transaction timeout"
+
+#: .\payment\methods\create_transaction.py:74
+msgid "Tranzaksiyani yaratib bolmaydi."
+msgstr "Cannot create transaction."
+
+#: .\payment\methods\create_transaction.py:75
+msgid "Невозможно создать транзакцию."
+msgstr "Cannot create transaction."
+
+#: .\payment\methods\create_transaction.py:76
+msgid "Cannot create transaction."
+msgstr "Cannot create transaction."
+
+#: .\payment\methods\perform_transaction.py:38
+msgid "Tranzaksiyani bajarib bolmaydi."
+msgstr "Unable to perform the transaction."
+
+#: .\payment\methods\perform_transaction.py:39
+msgid "Невозможно выполнить транзакцию."
+msgstr "Unable to perform the transaction."
+
+#: .\payment\methods\perform_transaction.py:40
+msgid "Unable to perform the transaction."
+msgstr "Unable to perform the transaction."
+
 #: .\products\models.py:11 .\products\models.py:34 .\products\models.py:66
 msgid "Name"
 msgstr "Name"
@@ -252,20 +284,14 @@ msgid "Categories"
 msgstr "Categories"
 
 #: .\products\models.py:43
-#, fuzzy
-#| msgid "Category"
 msgid "Parent SubCategory"
 msgstr "Parent SubCategory"
 
 #: .\products\models.py:51
-#, fuzzy
-#| msgid "Category"
 msgid "Subcategory"
 msgstr "Subcategory"
 
 #: .\products\models.py:52
-#, fuzzy
-#| msgid "Categories"
 msgid "Subcategories"
 msgstr "Subcategories"
 
@@ -289,197 +315,106 @@ msgstr "Barcode for Inner Carton"
 msgid "Model"
 msgstr "Model"
 
-#: .\products\models.py:80 .\products\models.py:94 .\products\models.py:151
-msgid "Product"
-msgstr "Product"
-
-#: .\products\models.py:81
+#: .\products\models.py:82
 msgid "Products"
 msgstr "Products"
 
-#: .\products\models.py:96
+#: .\products\models.py:97
 msgid "Type"
 msgstr "Type"
 
-#: .\products\models.py:97
+#: .\products\models.py:98
 msgid "Size"
 msgstr "Size"
 
-#: .\products\models.py:98
+#: .\products\models.py:99
 msgid "Power"
 msgstr "Power"
 
-#: .\products\models.py:99
+#: .\products\models.py:100
 msgid "Voltage"
 msgstr "Voltage"
 
-#: .\products\models.py:100
+#: .\products\models.py:101
 msgid "Frequency"
 msgstr "Frequency"
 
-#: .\products\models.py:101
+#: .\products\models.py:102
 msgid "Speed"
 msgstr "Speed"
 
-#: .\products\models.py:102
+#: .\products\models.py:103
 msgid "Capacity in wood"
 msgstr "Capacity in wood"
 
-#: .\products\models.py:103
+#: .\products\models.py:104
 msgid "Capacity in steel"
 msgstr "Capacity in steel"
 
-#: .\products\models.py:104
+#: .\products\models.py:105
 msgid "Weight"
 msgstr "Weight"
 
-#: .\products\models.py:105
+#: .\products\models.py:106
 msgid "Supplied in"
 msgstr "Supplied in"
 
-#: .\products\models.py:111
+#: .\products\models.py:112
 msgid "Specification"
 msgstr "Specification"
 
-#: .\products\models.py:112
-#, fuzzy
-#| msgid "Specification"
+#: .\products\models.py:113
 msgid "Specifications"
 msgstr "Specifications"
 
-#: .\products\models.py:123 .\products\models.py:139
-#, fuzzy
-#| msgid "Product"
+#: .\products\models.py:124 .\products\models.py:140
 msgid "Product Image"
 msgstr "Product Image"
 
-#: .\products\models.py:124 .\products\models.py:140
-#, fuzzy
-#| msgid "Products"
+#: .\products\models.py:125 .\products\models.py:141
 msgid "Product Images"
 msgstr "Product Images"
 
-#: .\products\models.py:132
+#: .\products\models.py:133
 msgid "At least one of image or video must be provided."
 msgstr "At least one of image or video must be provided."
 
-#: .\products\models.py:144
+#: .\products\models.py:145
 msgid "Main image"
 msgstr "Main image"
 
-#: .\products\models.py:163
-#, fuzzy
-#| msgid "Product"
-msgid "Product Detail"
-msgstr "Product Image"
-
 #: .\products\models.py:164
-#, fuzzy
-#| msgid "Products"
+msgid "Product Detail"
+msgstr "Product Detail"
+
+#: .\products\models.py:165
 msgid "Product Details"
-msgstr "Products"
+msgstr "Product Details"
+
+#: .\users\manager.py:11
+msgid "Foydalanuvchida email bo'lishi shart"
+msgstr "User must have email"
+
+#: .\users\manager.py:25
+msgid "Superuser uchun is_staff=True bo'lishi kerak"
+msgstr "For superuser, is_staff=True must be set."
+
+#: .\users\manager.py:27
+msgid "Superuser uchun is_superuser=True bo'lishi kerak"
+msgstr "For superuser, is_superuser=True must be set."
 
 #: .\users\models.py:11
 msgid "Username"
 msgstr "Username"
 
+#: .\users\models.py:12
+msgid "Address"
+msgstr "Address"
+
 #: .\users\models.py:23
+msgid "User"
+msgstr "User"
+
+#: .\users\models.py:24
 msgid "Users"
 msgstr "Users"
-
-#, fuzzy
-#~| msgid "Description"
-#~ msgid "Description "
-#~ msgstr "Description"
-
-#~ msgid "View"
-#~ msgstr "View"
-
-#~ msgid "Created time"
-#~ msgstr "Created time"
-
-#~ msgid "Updated time"
-#~ msgstr "Updated time"
-
-#~ msgid "Blog"
-#~ msgstr "Blog"
-
-#~ msgid "Blogs"
-#~ msgstr "Blogs"
-
-#~ msgid "Text"
-#~ msgstr "Text"
-
-#~ msgid "Comment"
-#~ msgstr "Comment"
-
-#~ msgid "Comments"
-#~ msgstr "Comments"
-
-#~ msgid "Rate"
-#~ msgstr "Rate"
-
-#~ msgid "Country"
-#~ msgstr "Country"
-
-#~ msgid "Company"
-#~ msgstr "Company"
-
-#, fuzzy
-#~| msgid "Specification"
-#~ msgid "Occupation"
-#~ msgstr "Occupation"
-
-#~ msgid "Is active ?"
-#~ msgstr "Is active ?"
-
-#~ msgid "Flag"
-#~ msgstr "Flag"
-
-#~ msgid "Languages"
-#~ msgstr "Languages"
-
-#~ msgid "Continent"
-#~ msgstr "Continent"
-
-#, fuzzy
-#~| msgid "Description"
-#~ msgid "Desciption"
-#~ msgstr "Description"
-
-#~ msgid "Email"
-#~ msgstr "Email"
-
-#~ msgid "Subscribed at"
-#~ msgstr "Subscribed at"
-
-#~ msgid "Power And Quality"
-#~ msgstr "Power And Quality"
-
-#~ msgid "Easy To Use"
-#~ msgstr "Easy To Use"
-
-#~ msgid "Safety"
-#~ msgstr "Safety"
-
-#~ msgid "Ergonomy"
-#~ msgstr "Ergonomy"
-
-#~ msgid "Cost"
-#~ msgstr "Cost"
-
-#, fuzzy
-#~| msgid "Categories"
-#~ msgid "Series"
-#~ msgstr "Series"
-
-#, fuzzy
-#~| msgid "Image"
-#~ msgid "image"
-#~ msgstr "Image"
-
-#~ msgid "Is distributor ?"
-#~ msgstr "Is distributor ?"
-
-#~ msgid "promo_code"
-#~ msgstr "promo_code"
