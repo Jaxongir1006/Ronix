@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User,UserProfile
 from django.utils.translation import gettext_lazy as _
 from core.utils import generate_verification_code, send_email_code,send_sms
 
@@ -157,6 +157,27 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'username', 'phone_number', 'is_verified']
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source='user.first_name', required=False)
+    last_name = serializers.CharField(source='user.last_name', required=False)
+    email = serializers.EmailField(source='user.email', required=False)
+    phone_number = serializers.CharField(source='user.phone_number', required=False)
+
     class Meta:
-        model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'phone_number', 'address']
+        model = UserProfile
+        fields = ['user', 'first_name', 'last_name', 'email', 'phone_number', 'address', 'avatar']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+
+        # Yangilash: User model maydonlari
+        user = instance.user
+        for attr, value in user_data.items():
+            setattr(user, attr, value)
+        user.save()
+
+        # Yangilash: UserProfile maydonlari
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance

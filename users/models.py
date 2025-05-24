@@ -9,7 +9,6 @@ class User(AbstractUser):
     verification_code = models.CharField(max_length=6, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     username = models.CharField(max_length=150, blank=True, null=True, unique=False, verbose_name=_('Username'))
-    address = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Address'))
 
     USERNAME_FIELD = 'email'  # Auth email orqali bo'ladi
     REQUIRED_FIELDS = []  # Username va password kiritish shart emas
@@ -22,3 +21,12 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    address = models.TextField(blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+
+    def __str__(self):
+        identifier = self.user.email or self.user.phone_number or f"User ID {self.user.id}"
+        return f"{identifier} profili"

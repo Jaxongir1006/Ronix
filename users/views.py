@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializer import RegisterSerializer, VerifyCodeSerializer,UserSerializer,UserProfileSerializer,LoginSerializer,SendResetCodeSerializer,ConfirmResetPasswordSerializer
-from .models import User
+from .models import User,UserProfile
 import requests
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.decorators import action
@@ -136,22 +136,27 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return UserProfile.objects.filter(user=self.request.user)
+
     @action(detail=False, methods=['get', 'put', 'patch', 'delete'], url_path='me')
     def me(self, request):
-        user = request.user
+        try:
+            profile = request.user.profile  # OneToOneField orqali
+        except UserProfile.DoesNotExist:
+            return Response({'detail': 'User profile not found.'}, status=status.HTTP_404_NOT_FOUND)
 
         if request.method == 'GET':
-            serializer = self.get_serializer(user)
+            serializer = self.get_serializer(profile)
             return Response(serializer.data)
 
         elif request.method in ['PUT', 'PATCH']:
-            serializer = self.get_serializer(user, data=request.data, partial=(request.method == 'PATCH'))
+            serializer = self.get_serializer(profile, data=request.data, partial=(request.method == 'PATCH'))
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         elif request.method == 'DELETE':
-            user.delete()
+            profile.delete()
             return Response({'detail': 'User profile deleted.'}, status=status.HTTP_204_NO_CONTENT)
-
