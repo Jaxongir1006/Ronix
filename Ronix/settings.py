@@ -98,11 +98,12 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware'
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    # "https://yourfrontend.com",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     # "https://yourfrontend.com",
+# ]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'Ronix.urls'
 

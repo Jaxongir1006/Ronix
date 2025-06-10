@@ -43,11 +43,11 @@ class CategoryTranslationSerialzer(serializers.Serializer):
     name = serializers.CharField()    
 
 class CategorySerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Category, serializer_class=CategoryTranslationSerialzer)
+    name = serializers.CharField(source='name')  # TranslatedFields ichidagi 'name'
 
     class Meta:
         model = Category
-        fields = ['id', 'imageURL','translations',]
+        fields = ['id', 'name', 'image']
 
 class SubCategoryTranslationSerialzer(serializers.Serializer):
     name = serializers.CharField()    

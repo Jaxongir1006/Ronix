@@ -1,8 +1,9 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializer import RegisterSerializer, VerifyCodeSerializer,UserSerializer,UserProfileSerializer,LoginSerializer,SendResetCodeSerializer,ConfirmResetPasswordSerializer
-from .models import User,UserProfile
+from .serializer import RegisterSerializer, VerifyCodeSerializer,UserSerializer,UserProfileSerializer,LoginSerializer
+from .serializer import SendResetCodeSerializer,ConfirmResetPasswordSerializer,AddressSerializer
+from .models import User,UserProfile,Address
 import requests
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework.decorators import action
@@ -160,3 +161,20 @@ class UserProfileViewSet(viewsets.ModelViewSet):
         elif request.method == 'DELETE':
             profile.delete()
             return Response({'detail': 'User profile deleted.'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Address.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def perform_destroy(self, instance):
+        instance.delete()

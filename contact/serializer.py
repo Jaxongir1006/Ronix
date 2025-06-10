@@ -20,4 +20,4 @@ class ContactUsSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         rep = super().to_representation(instance)
         rep['created_at'] = instance.created_at.strftime('%d-%m-%Y')
-        return rep
+        return rep 

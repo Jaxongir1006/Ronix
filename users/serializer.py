@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User,UserProfile
+from .models import User,UserProfile,Address
 from django.utils.translation import gettext_lazy as _
 from core.utils import generate_verification_code, send_email_code,send_sms
 
@@ -180,4 +180,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
 
+        return instance
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ['id', 'first_name', 'last_name', 'company', 'region', 'street', 'city', 'number_house', 'number_apartment', 'index']
+        read_only_fields = ['id']
+
+    def create(self, validated_data):
+        address = Address.objects.create(**validated_data)
+        return address
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
         return instance

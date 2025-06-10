@@ -11,9 +11,9 @@ class Category(TranslatableModel):
         name = models.CharField(max_length=200, verbose_name = _('Name')),
         description = models.TextField(verbose_name = _('Description'))
     )
-
+    path = models.CharField(max_length=255, unique=True, verbose_name=_('Path'), help_text=_('Unique path for the category'), blank=True, null=True)
     image = models.ImageField(upload_to='category/', verbose_name = _('Image'))
-
+    main_image = models.ImageField(upload_to='category/', verbose_name=_('Main Image'), blank=True, null=True)
     objects = TranslatableManager()
 
     class Meta:
@@ -29,7 +29,7 @@ class Category(TranslatableModel):
 
 class SubCategory(TranslatableModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories', verbose_name=_('Category'))
-
+    path = models.CharField(max_length=255, unique=True, verbose_name=_('Path'), help_text=_('Unique path for the subcategory'))
     translation = TranslatedFields(
         name = models.CharField(max_length=200, verbose_name=_('Name')),
         description = models.TextField(verbose_name=_("Description"))
