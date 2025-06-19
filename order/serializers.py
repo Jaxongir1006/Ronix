@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Order,OrderItem
 from django.utils.crypto import get_random_string
-from core.utils import send_sms, send_email_code, generate_verification_code
 from users.models import User
 from django.utils.translation import gettext_lazy as _
 
@@ -13,16 +12,16 @@ class OrderItemCreateSerializer(serializers.ModelSerializer):
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     items = OrderItemCreateSerializer(many=True, write_only=True)
-    user_email = serializers.EmailField(write_only=True, required=False)
-    phone_number = serializers.CharField(write_only=True, required=False)
+    user_email = serializers.EmailField(write_only=True, required=True)
+    phone_number = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = Order
         fields = ['user_email', 'phone_number', 'items']
 
     def validate(self, attrs):
-        if not attrs.get('user_email') and not attrs.get('phone_number'):
-            raise serializers.ValidationError(_("Phone number or email is required."))
+        if not attrs.get('user_email') or not attrs.get('phone_number'):
+            raise serializers.ValidationError(_("Phone number and email is required."))
         return attrs
 
     def create(self, validated_data):
@@ -31,12 +30,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         items_data = validated_data.pop('items')
 
         user = self._get_or_create_user(email, phone)
-
-        if not user.is_verified:
-            self._send_verification(user, email, phone)
-            raise serializers.ValidationError(
-                _("Verification code sent. Please verify your account before ordering.")
-            )
 
         return self._create_order(user, items_data, validated_data)
 
@@ -50,16 +43,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             }
         )
         return user
-
-    def _send_verification(self, user, email, phone):
-        code = generate_verification_code()
-        user.verification_code = code
-        user.save()
-
-        if email:
-            send_email_code(email, code)
-        elif phone:
-            send_sms(phone, code)
 
     def _create_order(self, user, items_data, extra_data):
         order = Order.objects.create(user=user, **extra_data)

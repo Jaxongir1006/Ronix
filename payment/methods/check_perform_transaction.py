@@ -18,7 +18,7 @@ class CheckPerformTransaction:
             return self._error(-31050, "Foydalanuvchi topilmadi")
 
         # 2. To‘lov qabul qilishga ruxsat bormi?
-        if not user.is_active or user.is_verified:
+        if not user.is_active:
             return self._error(-31051, "Foydalanuvchi tasdiqlanmagan yoki faol emas")
 
         # 3. Summani tekshirish (masalan: minimal yoki maksimal)

@@ -1,97 +1,129 @@
-from rest_framework import viewsets, status
+from rest_framework.viewsets import ViewSet,ModelViewSet
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
-from .serializer import RegisterSerializer, VerifyCodeSerializer,UserSerializer,UserProfileSerializer,LoginSerializer
-from .serializer import SendResetCodeSerializer,ConfirmResetPasswordSerializer,AddressSerializer
-from .models import User,UserProfile,Address
-import requests
-from rest_framework.permissions import AllowAny,IsAuthenticated
+from rest_framework import status
 from rest_framework.decorators import action
-from cart.models import Cart
+from .serializer import RegisterSerializer,LoginSerializer,VerifyCodeSerializer,AddressSerializer,UserSerializer,ResendCodeSerializer
+from .serializer import ChangePasswordSerializer,ChangePasswordWithEmailSerializer,VerifyCodeChangePasswordSerializer, UserProfileSerializer,UserEmailVerifySerializer
+from django.utils.translation import gettext_lazy as _
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from .models import Address,User
+from rest_framework_simplejwt.tokens import RefreshToken
+import requests
 
-
-class RegisterView(viewsets.ViewSet):
+class RegisterViewSet(ViewSet):
     def create(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'Royxatdan otish muvaffaqiyatli!'}, status=status.HTTP_201_CREATED)
+            user_data = serializer.save()
+            return Response({"message": _(f"Verification code has been sent to {user_data['email']}")}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class VerifyCodeView(viewsets.ViewSet):
-    def create(self, request):
+    @action(detail=False, methods=['post'], url_path='verify')
+    def verify_code(self, request):
         serializer = VerifyCodeSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        phone_number = serializer.validated_data.get('phone_number')
-        email = serializer.validated_data.get('email')
-        code = serializer.validated_data.get('code')
-        session_id = request.data.get("session_id")
+        if serializer.is_valid():
+            return Response({
+                "message": _("User verified successfully"),
+                "access_token": serializer.validated_data['access_token'],
+                "refresh_token": serializer.validated_data['refresh_token'],
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=False, methods=['post'], url_path='resend-code')
+    def resend_code(self, request):
+        serializer = ResendCodeSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response(
+                {"message": _(f"Verification code resent to {serializer.validated_data['email']}")},
+                status=status.HTTP_200_OK
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        try:
-            if phone_number:
-                user = User.objects.get(phone_number=phone_number)
-            else:
-                user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        if user.verification_code != code:
-            return Response({"error": "Invalid verification code."}, status=status.HTTP_400_BAD_REQUEST)
-
-        user.is_verified = True
-        user.verification_code = None
-        user.save()
-
-        if session_id:
-            try:
-                cart = Cart.objects.get(session_id=session_id, user__isnull=True)
-                cart.user = user
-                cart.session_id = None  # optional: uni tozalab qo'yish ham mumkin
-                cart.save()
-            except Cart.DoesNotExist:
-                pass
-
-
-        refresh = RefreshToken.for_user(user)
-
-        return Response({
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }, status=status.HTTP_200_OK)
-
-class LoginViewSet(viewsets.ViewSet):
+class LoginViewSet(ViewSet):
     def create(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.validated_data['user']
-
-            refresh = RefreshToken.for_user(user)
             return Response({
-                'message': 'Successfully logged in!',
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
+                "message": _("Login successful"),
+                "access_token": serializer.validated_data["access_token"],
+                "refresh_token": serializer.validated_data["refresh_token"],
             }, status=status.HTTP_200_OK)
-        return Response({"error": "Couldn't log in"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ChangePasswordViewSet(ViewSet):
+    @action(detail=False, methods=['post'], url_path='with-password')
+    def with_password(self, request):
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": _("Password changed successfully")}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ResetPasswordViewSet(viewsets.ViewSet):
-    @action(detail=False, methods=['post'], url_path='send-code')
-    def send_code(self, request):
-        serializer = SendResetCodeSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'message': "Kod yuborildi!"})
-
-    @action(detail=False, methods=['post'], url_path='confirm')
-    def confirm_reset(self, request):
-        serializer = ConfirmResetPasswordSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'message': "Parol muvaffaqiyatli ozgartirildi!"})
-
+    @action(detail=False, methods=['post'],url_path='with-email')
+    def find_email(self, request):
+        serializer = ChangePasswordWithEmailSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response({"message": _("Verification code has been sent to your email")}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=False, methods=['post'], url_path='verify')
+    def verify_code(self, request):
+        serializer = VerifyCodeChangePasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            return Response({"message": _("Password changed successfully")}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class GoogleAuthViewSet(viewsets.ViewSet):
+class UserProfileViewSet(ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    @action(detail=False, methods=['get', 'put', 'patch', 'delete'], url_path='me')
+    def me(self, request):
+        user = self.get_object()
+
+        if request.method == 'GET':
+            serializer = UserProfileSerializer(user)
+            return Response(serializer.data)
+
+        elif request.method in ['PUT', 'PATCH']:
+            serializer = UserProfileSerializer(user, data=request.data, partial=(request.method == 'PATCH'))
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        elif request.method == 'DELETE':
+            user.delete()
+            return Response({'detail': 'User deleted'}, status=status.HTTP_204_NO_CONTENT)
+        
+    @action(detail=False, methods=['post'], url_path='verify')
+    def verify_email(self, request):
+        serializer = UserEmailVerifySerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            return Response({"message": _("Email verified successfully")}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class AddressViewSet(ModelViewSet):
+    serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Address.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+class GoogleAuthViewSet(ViewSet):
     permission_classes = [AllowAny]
 
     def create(self, request):
@@ -118,7 +150,6 @@ class GoogleAuthViewSet(viewsets.ViewSet):
         user, created = User.objects.get_or_create(email=email)
         if created:
             user.username = username
-            user.is_verified = True
             user.save()
 
         # JWT token yaratamiz
@@ -131,50 +162,3 @@ class GoogleAuthViewSet(viewsets.ViewSet):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }, status=status.HTTP_200_OK)
-
-
-class UserProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return UserProfile.objects.filter(user=self.request.user)
-
-    @action(detail=False, methods=['get', 'put', 'patch', 'delete'], url_path='me')
-    def me(self, request):
-        try:
-            profile = request.user.profile  # OneToOneField orqali
-        except UserProfile.DoesNotExist:
-            return Response({'detail': 'User profile not found.'}, status=status.HTTP_404_NOT_FOUND)
-
-        if request.method == 'GET':
-            serializer = self.get_serializer(profile)
-            return Response(serializer.data)
-
-        elif request.method in ['PUT', 'PATCH']:
-            serializer = self.get_serializer(profile, data=request.data, partial=(request.method == 'PATCH'))
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        elif request.method == 'DELETE':
-            profile.delete()
-            return Response({'detail': 'User profile deleted.'}, status=status.HTTP_204_NO_CONTENT)
-
-
-class AddressViewSet(viewsets.ModelViewSet):
-    serializer_class = AddressSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return Address.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def perform_destroy(self, instance):
-        instance.delete()

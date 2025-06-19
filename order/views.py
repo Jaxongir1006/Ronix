@@ -1,4 +1,4 @@
-from rest_framework.viewsets import ModelViewSet,ViewSet
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderCreateSerializer,OrderReadSerializer
@@ -6,13 +6,12 @@ from .models import Order,OrderItem
 from rest_framework.decorators import action
 from cart.models import Cart
 from django.db import transaction
-from users.models import User
-from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework.permissions import IsAuthenticated
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderReadSerializer
+    authentication_classes = [IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
@@ -64,23 +63,4 @@ class OrderViewSet(ModelViewSet):
         if self.action == 'create':
             return OrderCreateSerializer
         return OrderReadSerializer
-
-class VerificationViewSet(ViewSet):
-    
-    def create(self, request):
-        code = request.data.get('code')
-        user = User.objects.filter(verification_code=code).first()
-
-        if user:
-            user.is_verified = True
-            user.save()
-            
-            refresh = RefreshToken.for_user(user)
-            token = {
-                'access': str(refresh.access_token),
-                'refresh': str(refresh),
-            }
-            return Response(token, status=status.HTTP_200_OK)
-        else:
-            return Response({'detail': 'Invalid verification code'}, status=status.HTTP_400_BAD_REQUEST)
 
