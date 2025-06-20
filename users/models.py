@@ -4,9 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from .manager import UserManager
 
 class User(AbstractUser):
-    email = models.EmailField(verbose_name=_('Email address'), unique=True, blank=True, null=True)
-    phone_number = models.CharField(max_length=20, verbose_name=_('Phone number'), blank=True, null=True, unique=True)
-    username = models.CharField(max_length=150, blank=True, null=True, unique=False, verbose_name=_('Username'))
+    email = models.EmailField(verbose_name=_('Email address'), unique=True)
+    phone_number = models.CharField(max_length=20, verbose_name=_('Phone number'), unique=True)
+    username = models.CharField(max_length=150, unique=False, verbose_name=_('Username'))
 
     USERNAME_FIELD = 'email'  # Auth email orqali bo'ladi
     REQUIRED_FIELDS = []  # Username va password kiritish shart emas
