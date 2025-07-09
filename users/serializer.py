@@ -17,7 +17,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"password": _("Password fields didn't match.")})
 
         return attrs
-   
+    
     def create(self, validated_data):
         validated_data.pop('password2')
         code = generate_verification_code()

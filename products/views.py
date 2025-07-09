@@ -50,16 +50,10 @@ class SubCategoryViewSet(ModelViewSet):
 
     @action(detail=True, methods=['get'], url_path='children')
     def get_children(self, request, pk=None):
-        cache_key = f'subcategories_children_{pk}'
-        data = cache.get(cache_key)
-        if data:
-            return Response(data, status=status.HTTP_200_OK)
         parent = get_object_or_404(SubCategory, pk=pk)
         children = SubCategory.objects.filter(parent=parent)
         serializer = self.get_serializer(children, many=True)
         
-        cache.set(cache_key, serializer.data, timeout=60*60)
-
         return Response(serializer.data)
     
 class ProductViewSet(ViewSet):
@@ -84,10 +78,6 @@ class ProductViewSet(ViewSet):
 
     @action(detail=False, methods=['get'], url_path='(?P<subcategory_name>[^/.]+)')
     def by_subcategory(self, request, subcategory_name=None):
-        cache_key = f'products_by_subcategory_{subcategory_name}'
-        data = cache.get(cache_key)
-        if data:
-            return Response(data, status=status.HTTP_200_OK)
         subcategory = get_object_or_404(SubCategory.objects.language('en'), translation__name=subcategory_name)
         products = Product.objects.language('en').filter(subcategory=subcategory)
 
@@ -96,8 +86,6 @@ class ProductViewSet(ViewSet):
         
         serializer = ProductForCartSerializer(paginated_products, many=True)
         response = paginator.get_paginated_response(serializer.data)
-
-        cache.set(cache_key, serializer.data, timeout=60*60)
 
         return response
 
