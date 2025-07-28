@@ -13,3 +13,5 @@ def send_contact_message_to_admin(sender, instance, created, **kwargs):
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[settings.ADMIN_EMAIL],
         )
+
+
