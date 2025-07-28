@@ -6,19 +6,16 @@ WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    libpq-dev gcc \
+    libpq-dev gcc tzdata netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install them
+# Copy requirements and install
 COPY requirements.txt .
 COPY .env .env
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the Django project into the image
+# Copy the rest of the project
 COPY . .
-    
-# Expose port 8000
-# EXPOSE 8000
 
-# Run development server
+# Default command (boshqariladi docker-compose ichida)
 CMD ["gunicorn", "Ronix.wsgi:application", "--bind", "0.0.0.0:8010"]

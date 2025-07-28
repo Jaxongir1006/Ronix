@@ -8,8 +8,8 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, verbose_name=_('Phone number'), unique=True)
     username = models.CharField(max_length=150, unique=False, verbose_name=_('Username'))
 
-    USERNAME_FIELD = 'email'  # Auth email orqali bo'ladi
-    REQUIRED_FIELDS = []  # Username va password kiritish shart emas
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'phone_number']
 
     objects = UserManager()
 
@@ -20,14 +20,3 @@ class User(AbstractUser):
         verbose_name = _("User")
         verbose_name_plural = _("Users")
     
-class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='addresses', verbose_name=_('User'))
-    first_name = models.CharField(max_length=100, verbose_name=_('First name'))
-    last_name = models.CharField(max_length=100, verbose_name=_('Last name'))
-    company = models.CharField(max_length=100, verbose_name=_('Company'))
-    region = models.CharField(max_length=100, verbose_name=_('Region'))
-    street = models.CharField(max_length=200, verbose_name=_('Street'))
-    city = models.CharField(max_length=100, verbose_name=_('City'))
-    number_house = models.CharField(max_length=50, verbose_name=_('House number'))
-    number_apartment = models.CharField(max_length=50, verbose_name=_('Apartment number'))
-    index = models.CharField(max_length=20, verbose_name=_('Index'))
