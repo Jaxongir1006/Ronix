@@ -1,59 +1,44 @@
 from rest_framework import serializers
-from .models import Product,Category,SubCategory,Specification,ProductDetail,ProductImages
-from parler_rest.serializers import TranslatableModelSerializer, TranslatedFieldsField
+from parler_rest.serializers import TranslatableModelSerializer
+from parler_rest.fields import TranslatedFieldsField
+from .models import Product, Category, SubCategory
 
-class SpecificationSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Specification)
+# Product uchun translation
+class ProductTranslationSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    made_in = serializers.CharField(allow_blank=True, required=False)
 
-    class Meta:
-        model = Specification
-        fields = ['product', 'translations']
-
-class ProductDetailSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=ProductDetail)
-
-    class Meta:
-        model = ProductDetail
-        fields = ['main_image','product','translations']
-
-class ProductImagesSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ProductImages
-        fields = ['product','image','video']
-
-class ProductSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Product)
-    specifications = SpecificationSerializer(read_only=True)
-    details = ProductDetailSerializer(many=True,read_only=True)
-    images = ProductImagesSerializer(many=True, read_only=True)
+# Product for Cart
+class ProductForCartSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Product, serializer_class=ProductTranslationSerializer)
 
     class Meta:
         model = Product
-        fields = ['id','translations','barcode_color','barcode_carton','image','model','subcategory','price','specifications','images','details']
+        fields = ['id', 'translations', 'image', 'model', 'price']
 
+# SubCategory translation (optional)
+class SubCategoryTranslationSerializer(serializers.Serializer):
+    name = serializers.CharField()
+
+# SubCategory
 class SubCategorySerializer(TranslatableModelSerializer):
-    translation = TranslatedFieldsField(shared_model=SubCategory)
+    translation = TranslatedFieldsField(shared_model=SubCategory, serializer_class=SubCategoryTranslationSerializer)
 
     class Meta:
         model = SubCategory
-        fields = ['category','translation','parent','image','id']
+        fields = ['id', 'category', 'parent', 'image', 'translation']
 
-class CategoryTranslationSerialzer(serializers.Serializer):
-    name = serializers.CharField()    
-
+# Category
 class CategorySerializer(TranslatableModelSerializer):
-    name = serializers.CharField(source='name')  # TranslatedFields ichidagi 'name'
+    name = serializers.CharField()
 
     class Meta:
         model = Category
         fields = ['id', 'name', 'image']
 
-class SubCategoryTranslationSerialzer(serializers.Serializer):
-    name = serializers.CharField()    
-
+# Category + Subcategories
 class SubForCategorySerializer(TranslatableModelSerializer):
-    translation = TranslatedFieldsField(shared_model=SubCategory, serializer_class=SubCategoryTranslationSerialzer)
+    translation = TranslatedFieldsField(shared_model=SubCategory, serializer_class=SubCategoryTranslationSerializer)
 
     class Meta:
         model = SubCategory
@@ -65,15 +50,12 @@ class CategoryDetailsSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Category
-        fields = ['id', 'image', 'translations','subcategories']
+        fields = ['id', 'image', 'translations', 'subcategories']
 
-class ProductTranslationSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    made_in = serializers.CharField(allow_blank=True, required=False)
-
-class ProductForCartSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Product, serializer_class=ProductTranslationSerializer)
+# Product
+class ProductSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Product)
 
     class Meta:
         model = Product
-        fields = ['id', 'translations', 'image', 'model', 'price']
+        fields = ['id', 'translations', 'barcode_color', 'barcode_carton', 'image', 'model', 'subcategory', 'price']
